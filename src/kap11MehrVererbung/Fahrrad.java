@@ -2,7 +2,7 @@ package kap11MehrVererbung;
 
 public class Fahrrad extends Fahrzeug
 {
-    double factor = 1/10.0;
+    private double factor = 1/10.0;
 
     public Fahrrad(String farbe, String marke)
     {
@@ -14,8 +14,4 @@ public class Fahrrad extends Fahrzeug
         return super.preis()*factor;
     }
 
-    public String toString()
-    {
-        return super.toString();
-    }
 }
