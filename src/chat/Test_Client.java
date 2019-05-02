@@ -8,6 +8,8 @@ public class Test_Client
     public static void main(String[] args)
     {
         MessageTest mt = new MessageTest();
-        mt.sendeMessage("pc1313.ntb.ch");
+
+        mt.sendeMessage("PCklz508.ntb.ch");
+        mt.sendeMessage("desktop-36f9d6s.ntb.ch");
     }
 }

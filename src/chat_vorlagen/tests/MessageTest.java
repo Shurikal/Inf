@@ -12,6 +12,7 @@ public class MessageTest
 
     public void sendeMessage(String host){
         PostingMessage pm = new PostingMessage("Chris", "Hallo");
+        communication.open();
         communication.sendMessage(host,5678,pm);
     }
 

@@ -1,5 +1,5 @@
 package chat_vorlagen.tests;
-import message.*;
+import chat_vorlagen.message.*;
 
 import java.awt.*;
 import java.awt.event.*;
