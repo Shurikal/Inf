@@ -29,7 +29,8 @@ public class Receiver extends Thread
                     Runnable appendText = new Runnable() {
                         @Override
                         public void run() {
-                            gui.addMessage((PostingMessage)message);
+                            PostingMessage pm = (PostingMessage) message;
+                            gui.addMessage(pm);
                         }
                     };
                     SwingUtilities.invokeLater(appendText);

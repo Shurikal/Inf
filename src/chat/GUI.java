@@ -12,6 +12,8 @@ import java.awt.*;
 
 public class GUI
 {
+    private GUI gui;
+
     private JFrame fenster;
 
     private JTextArea textfeld;
@@ -24,6 +26,7 @@ public class GUI
 
     public GUI()
     {
+        gui = this;
         Settings.set();
         fenster = new JFrame("Mein Chat");
         com = new Communication();
@@ -33,7 +36,10 @@ public class GUI
         fenster.add(addContent());
         fenster.pack();
         fenster.setVisible(true);
+        Receiver rc = new Receiver(com,gui);
+        rc.run();
     }
+
 
     public static void main(String[] args)
     {
@@ -56,7 +62,7 @@ public class GUI
     private JPanel centerPanel()
     {
         JPanel center = new JPanel();
-        textfeld = new JTextArea("Blabla");
+        textfeld = new JTextArea();
         textfeld.setEditable(false);
         center.setLayout(new BorderLayout());
 
@@ -173,7 +179,8 @@ public class GUI
         if(registred) {
             PostingMessage pm = new PostingMessage(name.getText(), message.getText());
             com.sendMessage(getHost(server.getText()), getPort(server.getText()), pm);
-            System.out.println("Unregistered: " + pm.getUser() + " at: " + getHost(server.getText()) + " Port: " + getPort(server.getText()));
+            //textfeld.append(pm.getUser()+"/t:"+pm.getText());
+            System.out.println("Message send: " + pm.getUser() + " at: " + getHost(server.getText()) + " Port: " + getPort(server.getText()));
         }
     }
 
@@ -189,6 +196,7 @@ public class GUI
 
     public void addMessage(PostingMessage pm)
     {
-        textfeld.append(pm.getUser()+"/t:"+pm.getText());
+        textfeld.append(pm.getUser()+"\t:"+pm.getText()+"\r\n");
     }
+
 }
