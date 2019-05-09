@@ -1,6 +1,5 @@
-package chat_vorlagen.client;
-import chat_vorlagen.message.*;
-import javax.swing.*;
+package chat.chat_vorlagen.client;
+import chat.chat_vorlagen.message.*;
 
 public class Receiver extends Thread
 {

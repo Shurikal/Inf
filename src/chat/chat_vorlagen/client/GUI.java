@@ -1,11 +1,8 @@
-package chat_vorlagen.client;
+package chat.chat_vorlagen.client;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.*;
 
-import chat_vorlagen.message.*;
+import chat.chat_vorlagen.message.*;
 
 public class GUI {
 

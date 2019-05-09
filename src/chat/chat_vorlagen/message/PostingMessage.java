@@ -1,4 +1,4 @@
-package chat_vorlagen.message;
+package chat.chat_vorlagen.message;
 
 public class PostingMessage extends Message {
 	private static final long serialVersionUID = -2645234121515049755L;

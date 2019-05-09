@@ -1,6 +1,6 @@
 package chat;
 
-import chat_vorlagen.message.Communication;
+import chat.chat_vorlagen.message.Communication;
 
 public class Test_Server
 {

@@ -1,4 +1,4 @@
-package chat_vorlagen.tests;
+package chat.chat_vorlagen.tests;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package chat_vorlagen.message;
+package chat.chat_vorlagen.message;
 
 import java.io.*;
 import java.net.*;

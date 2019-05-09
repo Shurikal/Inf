@@ -1,7 +1,6 @@
 package chat;
 
-import chat_vorlagen.message.Message;
-import chat_vorlagen.tests.MessageTest;
+import chat.chat_vorlagen.tests.MessageTest;
 
 public class Test_Client
 {

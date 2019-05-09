@@ -1,9 +1,8 @@
-package chat_vorlagen.server;
+package chat.chat_vorlagen.server;
 
 import java.util.*;
 import java.io.*;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.border.*;

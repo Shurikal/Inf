@@ -1,8 +1,7 @@
-package chat_vorlagen.server;
+package chat.chat_vorlagen.server;
 
 import java.net.*;
 import java.util.*;
-import chat_vorlagen.message.*;
 
 import java.util.Observable;
 

@@ -1,6 +1,6 @@
-package chat_vorlagen.tests;
+package chat.chat_vorlagen.tests;
 
-import chat_vorlagen.message.*;
+import chat.chat_vorlagen.message.*;
 
 public class MessageTest
 {

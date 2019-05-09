@@ -1,6 +1,5 @@
-package chat_vorlagen.tests;
+package chat.chat_vorlagen.tests;
 
-import java.io.*;
 import java.net.*;
 
 public class DatagramTest
