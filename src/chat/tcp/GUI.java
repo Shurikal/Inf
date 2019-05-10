@@ -1,10 +1,9 @@
-package chat;
+package chat.tcp;
 
 import bildverarbeitung.Settings;
+
 import chat.chat_vorlagen.message.Communication;
 import chat.chat_vorlagen.message.PostingMessage;
-import chat.chat_vorlagen.message.RegisterMessage;
-import chat.chat_vorlagen.message.UnregisterMessage;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -12,21 +11,19 @@ import java.awt.*;
 
 public class GUI
 {
-    private GUI gui;
-
     private JFrame fenster;
 
     private JTextArea textfeld;
 
     private JTextField server, name,message;
 
-    private Communication com;
+    private chat.chat_vorlagen.message.Communication com;
 
     private boolean registred;
 
     public GUI()
     {
-        gui = this;
+
         Settings.set();
         fenster = new JFrame("Mein Chat");
         com = new Communication();
@@ -36,8 +33,7 @@ public class GUI
         fenster.add(addContent());
         fenster.pack();
         fenster.setVisible(true);
-        Receiver rc = new Receiver(com,gui);
-        rc.run();
+
     }
 
 
@@ -93,7 +89,7 @@ public class GUI
 
         server = new JTextField();
 
-        JLabel serverLabel = new JLabel("ExampleServer:");
+        JLabel serverLabel = new JLabel("Server:");
 
         serverLabel.setPreferredSize(new Dimension(150,0));
 
@@ -160,28 +156,17 @@ public class GUI
 
     private void register()
     {
-        RegisterMessage rm = new RegisterMessage(name.getText());
-        com.sendMessage(getHost(server.getText()),getPort(server.getText()),rm);
-        registred = true;
-        System.out.println("Registered: " + rm.getUser()+ " at: "+ getHost(server.getText())+ " Port: " + getPort(server.getText()));
+
     }
 
     private void unregister()
     {
-        UnregisterMessage um = new UnregisterMessage(name.getText());
-        com.sendMessage(getHost(server.getText()),getPort(server.getText()),um);
-        registred = false;
-        System.out.println("Unregistered: " + um.getUser()+ " at: "+ getHost(server.getText())+ " Port: " + getPort(server.getText()));
+
     }
 
     private void send()
     {
-        if(registred) {
-            PostingMessage pm = new PostingMessage(name.getText(), message.getText());
-            com.sendMessage(getHost(server.getText()), getPort(server.getText()), pm);
-            //textfeld.append(pm.getUser()+"/t:"+pm.getText());
-            System.out.println("Message send: " + pm.getUser() + " at: " + getHost(server.getText()) + " Port: " + getPort(server.getText()));
-        }
+
     }
 
     private int getPort(String s)

@@ -28,7 +28,7 @@ public class MailClientGui
         scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(new TitledBorder("Text:"));
 
-        frame = new JFrame("Mail Client:" + benutzer);
+        frame = new JFrame("Mail ExampleClient:" + benutzer);
         frame.setMinimumSize(new Dimension(400,300));
 
 
