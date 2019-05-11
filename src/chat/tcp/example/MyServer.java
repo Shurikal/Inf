@@ -1,36 +1,30 @@
-package chat.tcp;
-
-import chat.tcp.example.MyServer;
-import chat.tcp.example.Responder;
+package chat.tcp.example;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Server extends Thread
+public class MyServer implements Runnable
 {
-
-
     Responder h;
     Socket connectionSocket;
+    private boolean bstop;
 
-    private boolean brun = true;
-
-
-    public Server(Responder h, Socket connectionSocket)
+    public MyServer(Responder h, Socket connectionSocket)
     {
         this.h = h;
         this.connectionSocket = connectionSocket;
     }
 
-
-
+    @Override
     public void run()
     {
-        while (h.responderMethod(connectionSocket) && brun)
+
+        while (h.responderMethod(connectionSocket) && !bstop)
         {
             try {
+                System.out.println("New Thread!");
                 // once an conversation with one client done,
                 // give chance to other threads
                 // so make this thread sleep
@@ -45,12 +39,11 @@ public class Server extends Thread
         } catch (IOException ex) {
             Logger.getLogger(MyServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
-
-    public void stopServer()
+    public void stop()
     {
-        brun = false;
+        bstop = true;
     }
-
 }
