@@ -48,7 +48,7 @@ public class Communication {
             Message message = (Message) objIn.readObject ();
             return message;
         } catch (Exception e) {
-            // e.printStackTrace ();
+            e.printStackTrace ();
             return null;
         } 
     } 

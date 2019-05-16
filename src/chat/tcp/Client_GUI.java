@@ -1,5 +1,8 @@
 package chat.tcp;
 
+import bildverarbeitung.Settings;
+import chat.tcp.example.TCPMultiClient;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -7,7 +10,7 @@ import java.awt.event.KeyEvent;
 
 public class Client_GUI
 {
-
+    private TCPMultiClient client;
     private JTextField textfeld;
 
     public static void main(String[] args)
@@ -18,6 +21,8 @@ public class Client_GUI
 
     public Client_GUI()
     {
+        client = new TCPMultiClient();
+        Settings.set();
         JFrame fenster = new JFrame("Client");
         Container contentPane = fenster.getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -123,11 +128,12 @@ public class Client_GUI
 
     private void disconnect()
     {
-
+        client.disconnect();
     }
 
     private void connect()
     {
-
+        client.connect(5555);
+        client.sendMessage("Test");
     }
 }

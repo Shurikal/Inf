@@ -7,6 +7,7 @@ import java.net.Socket;
 
 public class TCPMultiClient
 {
+    private Socket clientSocket;
     public static void main(String argv[]) throws Exception
     {
         String sentence;
@@ -43,5 +44,40 @@ public class TCPMultiClient
 
         }
         clientSocket.close();
+    }
+    public void connect(int port)
+    {
+        try {
+            clientSocket = new Socket("localhost", port);
+            System.out.println("Server Start");
+        }catch (Exception e)
+        {
+
+        }
+    }
+
+    public void sendMessage(String s)
+    {
+        try {
+            System.out.println("asdf");
+            DataOutputStream outToServer =
+                    new DataOutputStream(
+                            clientSocket.getOutputStream());
+            outToServer.writeBytes(s + '\n');
+            System.out.println("fdsa");
+        } catch (Exception e)
+        {
+
+        }
+    }
+
+    public void disconnect()
+    {
+        try {
+            clientSocket.close();
+        } catch (Exception e)
+        {
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 package chat.tcp;
 
+import bildverarbeitung.Settings;
 import chat.tcp.example.TCPMultiClient;
 import chat.tcp.example.TCPMultiServer;
 
@@ -22,6 +23,7 @@ public class Server_GUI
 
     public Server_GUI()
     {
+        Settings.set();
         JFrame fenster = new JFrame("ServerManager");
         Container contentPane = fenster.getContentPane();
         contentPane.setLayout(new BorderLayout());

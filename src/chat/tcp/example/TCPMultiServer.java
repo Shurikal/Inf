@@ -13,7 +13,7 @@ public class TCPMultiServer {
 
 
     public static void main(String argv[]) throws Exception {
-
+        start();
     }
 
 

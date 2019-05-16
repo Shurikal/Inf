@@ -93,7 +93,7 @@ public class GUI
 
         server = new JTextField();
 
-        JLabel serverLabel = new JLabel("ExampleServer:");
+        JLabel serverLabel = new JLabel("Server:");
 
         serverLabel.setPreferredSize(new Dimension(150,0));
 

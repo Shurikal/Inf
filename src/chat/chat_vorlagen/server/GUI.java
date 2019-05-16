@@ -14,6 +14,7 @@ public class GUI implements Observer
     ByteArrayOutputStream baos;
 
     SimpleChatServer server;
+    SimpleServer serverS;
 
     public GUI(SimpleChatServer server)
     {
@@ -41,6 +42,33 @@ public class GUI implements Observer
         fenster.pack();
         fenster.setVisible(true);
     }
+    public GUI(SimpleServer serverS)
+    {
+        this.serverS = serverS;
+
+        JFrame fenster = new JFrame("SimpleChatServer on port " + serverS.PORT + " NTB Version");
+        fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container inhaltsFlaeche = fenster.getContentPane();
+        inhaltsFlaeche.setPreferredSize(new Dimension(500,400));
+
+        registeredClients = new JTextArea(5, 0);
+        inhaltsFlaeche.add(new JScrollPane(registeredClients), BorderLayout.NORTH);
+        registeredClients.setBorder (new TitledBorder ("Registrierte Klienten"));
+
+        console = new JTextArea(); console.setEditable(false);
+        inhaltsFlaeche.add(new JScrollPane(console), BorderLayout.CENTER);
+        console.setBorder (new TitledBorder("Meldungen"));
+
+        //redirect System.out to console
+        baos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(baos));
+        DefaultCaret caret = (DefaultCaret)console.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.OUT_BOTTOM);
+
+        fenster.pack();
+        fenster.setVisible(true);
+    }
+
 
     public void update(Observable obs, Object obj)
     {
