@@ -30,7 +30,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener
 
         addMouseMotionListener(this);
 
-        timer = new Timer(1,e -> {
+        timer = new Timer(20,e -> {
             update();
         });
         timer.start();
