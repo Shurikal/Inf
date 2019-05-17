@@ -21,7 +21,7 @@ public class Ball extends JPanel
         restart();
     }
 
-    public void wechseXRichtung()
+    public void wechsleXRichtung()
     {
         velx = -1*velx;
     }
@@ -44,7 +44,7 @@ public class Ball extends JPanel
 
     public void restart()
     {
-        point = new Point(rnd.nextInt(450)-25,0);
+        point = new Point(rnd.nextInt(500-50)+25,0);
         setBounds((int)point.getX(),(int)point.getY(), 20, 20);
         while(velx <minspeed && velx>-minspeed) {
             velx = rnd.nextDouble()*speed - speed/2;

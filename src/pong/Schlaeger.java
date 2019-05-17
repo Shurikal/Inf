@@ -7,18 +7,21 @@ import java.awt.*;
 public class Schlaeger extends JPanel
 {
 
+    private int height=20;
+
     private int width;
 
     public Schlaeger(int width)
     {
         this.width = width;
         setBackground(Color.green);
-        setBounds(0, 450, width, 20);
+        setBounds(0, 450, width, height);
 
     }
 
-    public void setX(int x)
+    public void setXY(int x,int y)
     {
-        super.setBounds(x, 450, width, 20);
+        this.setBounds(x, y, width, height);
     }
+
 }
