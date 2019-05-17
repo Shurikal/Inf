@@ -2,10 +2,12 @@ package pong;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-public class Spielfeld extends JPanel implements MouseMotionListener
+public class Spielfeld extends JPanel implements MouseMotionListener, KeyListener
 {
     private Ball ball;
     private Schlaeger schlaeger;
@@ -13,12 +15,18 @@ public class Spielfeld extends JPanel implements MouseMotionListener
     private int width = 500;
     private int height = 500;
 
+    private int delay =20;
+
     private int currentscore;
 
+    private boolean aiON;
+
     private JLabel score;
+    private JLabel speed;
 
     public Spielfeld()
     {
+
         setPreferredSize(new Dimension(width, height));
         setBackground(new Color(120,55,205));
         ball = new Ball(20);
@@ -30,15 +38,57 @@ public class Spielfeld extends JPanel implements MouseMotionListener
 
         addMouseMotionListener(this);
 
-        timer = new Timer(20,e -> {
+        addKeyListener(this);
+        this.setFocusable(true);
+        timer = new Timer(delay,e -> {
             update();
         });
         timer.start();
 
+        speed = new JLabel("Speed: "+delay);
+        speed.setBounds(width / 2 - 50, 40,100, 20);
+        speed.setForeground(Color.WHITE);
         score = new JLabel("Score: 0");
         score.setBounds(width / 2 -50,20,100, 20);
         this.add(score);
+        this.add(speed);
         score.setForeground(Color.WHITE);
+    }
+
+    public void keyTyped(KeyEvent e)
+    {
+
+    }
+
+    public void keyPressed(KeyEvent e)
+    {
+        switch(e.getKeyChar())
+        {
+            case 'q':
+                delay += 1;
+                break;
+            case 'e':
+                if(delay >0){
+                    delay -= 1;}
+                break;
+            case 'b':
+                aiON =!aiON;
+                break;
+            case 'a':
+                schlaeger.setWidth(schlaeger.getWidth()+1);
+                break;
+            case 'd':
+                schlaeger.setWidth(schlaeger.getWidth()-1);
+                break;
+        }
+        speed.setText("Speed: " + delay);
+        timer.setDelay(delay);
+        timer.start();
+    }
+
+    public void keyReleased(KeyEvent e)
+    {
+
     }
 
     public void mouseDragged(MouseEvent e)
@@ -48,14 +98,18 @@ public class Spielfeld extends JPanel implements MouseMotionListener
 
     public void mouseMoved(MouseEvent e)
     {
-       // schlaeger.setXY(e.getX() - schlaeger.getWidth() / 2, this.getHeight() - 50);
+        if(!aiON) {
+            schlaeger.setXY(e.getX() - schlaeger.getWidth() / 2, this.getHeight() - 50);
+        }
       //  schlaeger.setXY(ball.getX()  schlaeger.getWidth() / 2, this.getHeight() - 50);
     }
 
     public void update()
     {
-        schlaeger.setXY(ball.getX() - schlaeger.getWidth() / 2, this.getHeight() - 50);
-
+        this.requestFocus();
+        if(aiON) {
+            schlaeger.setXY(ball.getX() - schlaeger.getWidth() / 2, this.getHeight() - 50);
+        }
         //Wand Detection
         if (ball.getLocation().getX() < 0 || ball.getLocation().getX() >= this.getWidth()-ball.getWidth()) {
             ball.wechsleXRichtung();

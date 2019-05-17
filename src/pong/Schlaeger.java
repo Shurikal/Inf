@@ -24,4 +24,9 @@ public class Schlaeger extends JPanel
         this.setBounds(x, y, width, height);
     }
 
+    public void setWidth(int width)
+    {
+        this.width = width;
+    }
+
 }
