@@ -6,15 +6,19 @@ import java.util.Random;
 
 public class Ball extends JPanel
 {
-    private int velx, vely;
+    private double velx, vely;
+    private Point point;
     private Random rnd;
+    private double speed;
+    private double minspeed;
 
-    public Ball()
+    public Ball(double speed)
     {
-        setBackground(Color.black);
-        setBounds(0, 0, 20, 20);
-        velx = rnd.nextInt(20)-10;
-        vely = rnd.nextInt(10);
+        rnd = new Random();
+        setBackground(Color.YELLOW);
+        this.speed = speed;
+        minspeed = speed *0.4;
+        restart();
     }
 
     public void wechseXRichtung()
@@ -27,8 +31,26 @@ public class Ball extends JPanel
         vely = -1* vely;
     }
 
+    public void wechslepYRichtung()
+    {
+        vely=-Math.abs(vely);
+    }
+
     public Point gibNeuePosition()
     {
-        return new Point(0, 0);
+        point.setLocation(point.getX()+velx,point.getY()+vely);
+        return point;
+    }
+
+    public void restart()
+    {
+        point = new Point(rnd.nextInt(450)-25,0);
+        setBounds((int)point.getX(),(int)point.getY(), 20, 20);
+        while(velx <minspeed && velx>-minspeed) {
+            velx = rnd.nextDouble()*speed - speed/2;
+        }
+        while(vely <minspeed && vely >-minspeed) {
+            vely = rnd.nextDouble()*speed/2;
+        }
     }
 }
