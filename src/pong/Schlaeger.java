@@ -9,6 +9,8 @@ public class Schlaeger extends JPanel
 
     private int height=20;
 
+    private int old_x;
+
     private int width;
 
     public Schlaeger(int width)
@@ -21,7 +23,17 @@ public class Schlaeger extends JPanel
 
     public void setXY(int x,int y)
     {
-        this.setBounds(x, y, width, height);
+        int deltax = old_x -x;
+        old_x = this.getX() -deltax;
+        if(deltax > 10)
+        {
+            deltax = 10;
+        }
+        if(deltax < -10)
+        {
+            deltax = -10;
+        }
+        this.setBounds(this.getX()-deltax, y, width, height);
     }
 
     public void setWidth(int width)

@@ -20,6 +20,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
     private int currentscore;
 
     private boolean aiON;
+    private boolean debugON;
 
     private JLabel score;
     private JLabel speed;
@@ -29,7 +30,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
         setPreferredSize(new Dimension(width, height));
         setBackground(new Color(120,55,205));
-        ball = new Ball(20);
+        ball = new Ball(50);
         schlaeger = new Schlaeger(200);
         setLayout(null);
 
@@ -46,12 +47,13 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
         timer.start();
 
         speed = new JLabel("Speed: "+delay);
-        speed.setBounds(width / 2 - 50, 40,100, 20);
+        speed.setBounds(width - 150, 40,100, 20);
         speed.setForeground(Color.WHITE);
         score = new JLabel("Score: 0");
-        score.setBounds(width / 2 -50,20,100, 20);
+        score.setBounds(width  -150,20,100, 20);
         this.add(score);
         this.add(speed);
+        speed.setVisible(false);
         score.setForeground(Color.WHITE);
     }
 
@@ -75,11 +77,13 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
                 aiON =!aiON;
                 break;
             case 'a':
-                schlaeger.setWidth(schlaeger.getWidth()+1);
+                schlaeger.setWidth(schlaeger.getWidth()+5);
                 break;
             case 'd':
-                schlaeger.setWidth(schlaeger.getWidth()-1);
+                schlaeger.setWidth(schlaeger.getWidth()-5);
                 break;
+            case 'f':
+                debugON =!debugON;
         }
         speed.setText("Speed: " + delay);
         timer.setDelay(delay);
@@ -135,6 +139,19 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
             currentscore +=1;
             score.setText("Score : " + currentscore);
         }
+
+        speed.setVisible(debugON);
+        if(this.getHeight() != height || this.getWidth() != width)
+        {
+            width = this.getWidth();
+            height = this.getHeight();
+            speed.setBounds(width - 150, 40,100, 20);
+            score.setBounds(width -150,20,100, 20);
+            ball.restart();
+            currentscore =0;
+            score.setText("Score : 0");
+        }
+
 
         ball.setLocation(ball.gibNeuePosition());
     }

@@ -21,6 +21,9 @@ public class Ball extends JPanel
         restart();
     }
 
+    /**
+     *
+     */
     public void wechsleXRichtung()
     {
         velx = -1*velx;
@@ -36,6 +39,10 @@ public class Ball extends JPanel
         vely=-Math.abs(vely);
     }
 
+    /**
+     *
+     * @return blablabla
+     */
     public Point gibNeuePosition()
     {
         point.setLocation(point.getX()+velx,point.getY()+vely);
