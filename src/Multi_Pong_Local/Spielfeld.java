@@ -207,6 +207,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
             width = this.getWidth();
             height = this.getHeight();
             schlaegerRe.setXY(this.width-50,schlaegerRe.getY());
+            ball.restart();
 
         }
     }
