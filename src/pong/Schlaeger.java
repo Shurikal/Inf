@@ -13,6 +13,8 @@ public class Schlaeger extends JPanel
 
     private int width;
 
+    private int acc = 100;
+
     public Schlaeger(int width)
     {
         this.width = width;
@@ -25,13 +27,13 @@ public class Schlaeger extends JPanel
     {
         int deltax = old_x -x;
         old_x = this.getX() -deltax;
-        if(deltax > 10)
+        if(deltax > acc)
         {
-            deltax = 10;
+            deltax = acc;
         }
-        if(deltax < -10)
+        if(deltax < -acc)
         {
-            deltax = -10;
+            deltax = -acc;
         }
         this.setBounds(this.getX()-deltax, y, width, height);
     }

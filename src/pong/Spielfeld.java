@@ -150,6 +150,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
             ball.restart();
             currentscore =0;
             score.setText("Score : 0");
+            schlaeger.setXY(this.width/2,this.getHeight()-50);
         }
 
 
