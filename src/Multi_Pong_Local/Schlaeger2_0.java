@@ -11,7 +11,7 @@ public class Schlaeger2_0 extends JPanel
 
     private int width=20;
 
-    private int acc = 30;
+    private int acc = 5;
 
     private int heigth;
 

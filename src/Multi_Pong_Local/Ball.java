@@ -85,6 +85,9 @@ public class Ball extends JPanel
     {
         velx = speed * Math.sin(angle);
         vely = speed * Math.cos(angle);
+        System.out.println("X: "+ velx);
+
+        System.out.println("Y: "+ vely);
     }
 
 

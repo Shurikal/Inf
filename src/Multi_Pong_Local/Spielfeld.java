@@ -35,7 +35,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
         addKeyListener(this);
         this.setFocusable(true);
-        ball = new Ball(10,this);
+        ball = new Ball(5,this);
         schlaegerLi = new Schlaeger2_0(200,50,ball,1);
         schlaegerRe = new Schlaeger2_0(200,450,ball,-1);
 
@@ -168,9 +168,9 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
     public void mouseMoved(MouseEvent e)
     {
         if(!aiON) {
-            //schlaeger.setXY(e.getX() - schlaeger.getWidth() / 2, this.getHeight() - 50);
+
         }
-      //  schlaeger.setXY(ball.getX()  schlaeger.getWidth() / 2, this.getHeight() - 50);
+
     }
 
     public void update()
@@ -206,34 +206,44 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
         if(buttonMask[0]) {
             //W
-            schlaegerLi.suby();
+            if (schlaegerLi.getY() > 0) {
+                schlaegerLi.suby();
+            }
+
         }
 
         if (buttonMask[1]) {
             //S
-            schlaegerLi.addy();
+            if(schlaegerLi.getY()+schlaegerLi.getHeight() < this.getHeight()) {
+                schlaegerLi.addy();
+            }
         }
 
         if (buttonMask[2]) {
             //UP
-            schlaegerRe.suby();
+            if (schlaegerRe.getY() > 0) {
+                schlaegerRe.suby();
+            }
         }
 
         if (buttonMask[3]) {
             //Down
-            schlaegerRe.addy();
+            if(schlaegerRe.getY()+schlaegerRe.getHeight() < this.getHeight()) {
+                schlaegerRe.addy();
+            }
         }
         ball.setLocation(ball.gibNeuePosition());
 
         schlaegerRe.collisionUpdate();
         schlaegerLi.collisionUpdate();
 
-
+        //Screensize geändert
         if(this.getHeight() != height || this.getWidth() != width)
         {
             width = this.getWidth();
             height = this.getHeight();
             schlaegerRe.setXY(this.width-50,schlaegerRe.getY());
+            scoreRe.setBounds(width-100,20,100,100);
             ball.restart();
 
         }
