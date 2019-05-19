@@ -11,6 +11,8 @@ public class Ball extends JPanel
     private Random rnd;
     private double speed;
     private double minspeed;
+    private JPanel spielfeld;
+
 
     public Ball(double speed)
     {
@@ -19,6 +21,12 @@ public class Ball extends JPanel
         this.speed = speed;
         minspeed = speed *0.4;
         restart();
+    }
+
+    public Ball(double speed, JPanel spielfeld)
+    {
+        this(speed);
+        this.spielfeld = spielfeld;
     }
 
     /**
@@ -51,14 +59,32 @@ public class Ball extends JPanel
 
     public void restart()
     {
-        point = new Point(rnd.nextInt(500-50)+25,0);
+        if(spielfeld ==null)
+        {
+            point = new Point(500 / 2, 0);
+
+        }else{
+            point = new Point(spielfeld.getWidth() / 2, 0);
+
+        }
         setBounds((int)point.getX(),(int)point.getY(), 20, 20);
-        while(velx <minspeed && velx>-minspeed) {
-            velx = rnd.nextDouble()*speed - speed/2;
+
+        double angle = 0;
+        while(angle > -Math.PI /8 || angle < -Math.PI*(7.0/8) || ((angle > -Math.PI *(5.0/8)&& angle < -Math.PI *(3.0/8)))) {
+            angle = -rnd.nextDouble() * Math.PI;
+
         }
-        while(vely <minspeed && vely >-minspeed) {
-            vely = rnd.nextDouble()*speed/2;
-        }
+
+
+        velx = speed * Math.cos(angle);
+        vely = -speed * Math.sin(angle);
+
+    }
+
+    public void setAngle(double angle)
+    {
+        velx = speed * Math.sin(angle);
+        vely = speed * Math.cos(angle);
     }
 
 

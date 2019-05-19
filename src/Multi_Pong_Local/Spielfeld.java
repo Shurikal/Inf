@@ -31,7 +31,11 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
         setPreferredSize(new Dimension(width, height));
         setBackground(new Color(120,55,205));
-        ball = new Ball(50);
+        addMouseMotionListener(this);
+
+        addKeyListener(this);
+        this.setFocusable(true);
+        ball = new Ball(10,this);
         schlaegerLi = new Schlaeger(200,50,ball);
         schlaegerRe = new Schlaeger(200,450,ball);
 
@@ -43,10 +47,7 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
         this.add(schlaegerRe);
         this.add(ball);
 
-        addMouseMotionListener(this);
 
-        addKeyListener(this);
-        this.setFocusable(true);
         timer = new Timer(delay,e -> {
             update();
         });
@@ -237,8 +238,4 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
         }
     }
-
-
-
-
 }
