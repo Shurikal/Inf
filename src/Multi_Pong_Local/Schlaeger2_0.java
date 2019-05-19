@@ -19,15 +19,17 @@ public class Schlaeger2_0 extends JPanel
     private int xPos;
     private Ball b;
 
+    private int li_re;
+
     private boolean bounce;
 
-    public Schlaeger2_0(int heigth, int x, Ball b)
+    public Schlaeger2_0(int heigth, int x, Ball b,int li_re)
     {
         this.heigth = heigth;
         setBackground(Color.green);
         this.b = b;
         setBounds(x, yPos, width, heigth);
-
+        this.li_re =li_re;
     }
 
     public void setXY(int x,int y)
@@ -55,11 +57,12 @@ public class Schlaeger2_0 extends JPanel
 
     public void collisionUpdate()
     {
+        double angle = 0;
         boolean x2 = getX()+getWidth()>b.getX() && getX() < b.getX() + b.getWidth();
         boolean y2 = getY() + getHeight() > b.getY() && getY()< b.getY() + b.getHeight();
         if (y2 && x2 && !bounce){
-            b.wechsleXRichtung();
-            bounce = true;
+            angle = Math.atan2(li_re*(this.getHeight()/2+b.getWidth()/2),(b.getY()+b.getHeight()/2)-(this.getY()+this.getHeight()/2));
+            b.setAngle(angle);
         }else{
             bounce = false;
         }

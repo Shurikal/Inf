@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 public class Spielfeld extends JPanel implements MouseMotionListener, KeyListener
 {
     private Ball ball;
-    private Schlaeger schlaegerLi, schlaegerRe;
+    private Schlaeger2_0 schlaegerLi, schlaegerRe;
     private Timer timer;
     private int width = 500;
     private int height = 500;
@@ -36,8 +36,8 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
         addKeyListener(this);
         this.setFocusable(true);
         ball = new Ball(10,this);
-        schlaegerLi = new Schlaeger(200,50,ball);
-        schlaegerRe = new Schlaeger(200,450,ball);
+        schlaegerLi = new Schlaeger2_0(200,50,ball,1);
+        schlaegerRe = new Schlaeger2_0(200,450,ball,-1);
 
         schlaegerLi.setXY(50-schlaegerLi.getWidth(),50);
 
