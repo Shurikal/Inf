@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Spielfeld extends JPanel implements MouseMotionListener, KeyListener
 {
@@ -19,15 +17,14 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
     private int delay =20;
 
-    private int currentscore;
-
     private boolean aiON;
     private boolean debugON;
 
     private boolean[] buttonMask= new boolean[4];
 
-    private JLabel score;
-    private JLabel speed;
+    private JLabel speed,scoreLi,scoreRe;
+
+    private int iscoreRe,iscoreLi;
 
     public Spielfeld()
     {
@@ -55,15 +52,33 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
         });
         timer.start();
 
+
+        scoreLi = new JLabel(""+iscoreLi);
+        scoreRe = new JLabel(""+iscoreRe);
+
+        scoreRe.setForeground(Color.WHITE);
+        scoreLi.setForeground(Color.WHITE);
+
+        scoreRe.setFont(new Font("Arial",Font.BOLD,40));
+        scoreLi.setFont(new Font("Arial",Font.BOLD,40));
+
+        scoreRe.setBounds(400,20,100,100);
+        scoreLi.setBounds(0,20,100,100);
+
+        scoreRe.setHorizontalAlignment(SwingConstants.LEFT);
+
+        scoreLi.setHorizontalAlignment(SwingConstants.RIGHT);
         speed = new JLabel("Speed: "+delay);
         speed.setBounds(width - 150, 40,100, 20);
         speed.setForeground(Color.WHITE);
-        score = new JLabel("Score: 0");
-        score.setBounds(width  -150,20,100, 20);
-        this.add(score);
+
+
+        this.add(scoreLi);
+        this.add(scoreRe);
+
         this.add(speed);
         speed.setVisible(false);
-        score.setForeground(Color.WHITE);
+
     }
 
     public void keyTyped(KeyEvent e)
@@ -162,14 +177,25 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
         this.requestFocus();
 
         //Wand Detection
-        if (ball.getLocation().getX() < 0 || ball.getLocation().getX() >= this.getWidth()-ball.getWidth()) {
-            ball.wechsleXRichtung();
-        }
-
         if (ball.getLocation().getY() < 0 || ball.getLocation().getY() >= this.getHeight()-ball.getHeight()) {
             ball.wechsleYRichtung();
         }
 
+
+        //Links
+        if (ball.getLocation().getX() < 0) {
+            iscoreRe+=1;
+            scoreRe.setText(""+iscoreRe);
+            ball.restart();
+        }
+
+        //Rechts
+        if( ball.getLocation().getX() >= this.getWidth()-ball.getWidth())
+        {
+            iscoreLi +=1;
+            scoreLi.setText(""+iscoreLi);
+            ball.restart();
+        }
 
         speed.setVisible(debugON);
         if(this.getHeight() != height || this.getWidth() != width)
@@ -211,6 +237,8 @@ public class Spielfeld extends JPanel implements MouseMotionListener, KeyListene
 
         }
     }
+
+
 
 
 }
