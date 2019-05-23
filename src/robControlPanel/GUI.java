@@ -1,11 +1,7 @@
 package robControlPanel;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.text.NumberFormat;
 import java.time.LocalTime;
 
 public class GUI extends JPanel
@@ -52,14 +48,14 @@ public class GUI extends JPanel
 
     private void connectRob1()
     {
-        if(Connection.connected_Rob1())
+        if(Connection_Handler.connected_Rob1())
         {
 
         }else{
             rob1.setText("Verbinde ...");
             try {
-                Connection.connect_Rob1();
-                if(Connection.connected_Rob1())
+                Connection_Handler.connect_Rob1();
+                if(Connection_Handler.connected_Rob1())
                 {
                     addText("Verbindung Rob1 erfolgreich!");
                     rob1.setText("Trenne Rob1");
@@ -75,14 +71,14 @@ public class GUI extends JPanel
 
     private void connectRob2()
     {
-        if(Connection.connected_Rob2())
+        if(Connection_Handler.connected_Rob2())
         {
 
         }else{
             rob2.setText("Verbinde ...");
             try {
-                Connection.connect_Rob2();
-                if(Connection.connected_Rob2())
+                Connection_Handler.connect_Rob2();
+                if(Connection_Handler.connected_Rob2())
                 {
                     addText("Verbindung Rob2 erfolgreich!");
                     rob2.setText("Trenne Rob2");

@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.Socket;
 
 
-public class Connection
+public class Connection_Handler
 {
     private static Socket socket1, socket2;
 
