@@ -15,6 +15,8 @@ public class GUI extends JPanel
 
     private JTextField cmdField;
 
+    private Connection_Handler robs;
+
     public GUI()
     {
         buttonMask = new boolean[4];
@@ -26,6 +28,8 @@ public class GUI extends JPanel
         this.add(centerPanel(),BorderLayout.CENTER);
 
         this.add(botPanel(), BorderLayout.SOUTH);
+
+        robs = new Connection_Handler();
 
     }
 
@@ -48,15 +52,18 @@ public class GUI extends JPanel
 
     private void connectRob1()
     {
-        if(Connection_Handler.connected_Rob1())
+
+        if(robs.connected_Rob1())
         {
 
         }else{
+            System.out.println("blabla");
             rob1.setText("Verbinde ...");
             try {
-                Connection_Handler.connect_Rob1();
-                if(Connection_Handler.connected_Rob1())
+                robs.connect_Rob1();
+                if(robs.connected_Rob1())
                 {
+                    System.out.println("Verbindung Rob1 erfolgreich");
                     addText("Verbindung Rob1 erfolgreich!");
                     rob1.setText("Trenne Rob1");
                 }
@@ -71,14 +78,14 @@ public class GUI extends JPanel
 
     private void connectRob2()
     {
-        if(Connection_Handler.connected_Rob2())
+        if(robs.connected_Rob2())
         {
 
         }else{
             rob2.setText("Verbinde ...");
             try {
-                Connection_Handler.connect_Rob2();
-                if(Connection_Handler.connected_Rob2())
+                robs.connect_Rob2();
+                if(robs.connected_Rob2())
                 {
                     addText("Verbindung Rob2 erfolgreich!");
                     rob2.setText("Trenne Rob2");
