@@ -2,6 +2,7 @@ package robControlPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 public class GUI extends JPanel
@@ -29,7 +30,7 @@ public class GUI extends JPanel
 
         this.add(botPanel(), BorderLayout.SOUTH);
 
-        robs = new Connection_Handler();
+        robs = new Connection_Handler(this);
 
     }
 
@@ -53,25 +54,24 @@ public class GUI extends JPanel
     private void connectRob1()
     {
 
+        System.out.println("Verbinde...");
         if(robs.connected_Rob1())
         {
 
         }else{
-            System.out.println("blabla");
             rob1.setText("Verbinde ...");
-            try {
-                robs.connect_Rob1();
-                if(robs.connected_Rob1())
-                {
-                    System.out.println("Verbindung Rob1 erfolgreich");
-                    addText("Verbindung Rob1 erfolgreich!");
-                    rob1.setText("Trenne Rob1");
-                }
-            }catch (Exception e)
+
+
+            robs.connect_Rob1();
+            if(robs.connected_Rob1())
             {
-                addText(e.toString());
+                System.out.println("Verbindung Rob1 erfolgreich");
+                addText("Verbindung Rob1 erfolgreich!");
+                rob1.setText("Trenne Rob1");
+            } else {
                 rob1.setText("Verbinde Rob1");
             }
+
 
         }
     }
@@ -147,7 +147,7 @@ public class GUI extends JPanel
         return bot;
     }
 
-    private void addText(String s)
+    public void addText(String s)
     {
         log.append( LocalTime.now()+ " : " + s + "\r\n");
     }
@@ -170,4 +170,20 @@ public class GUI extends JPanel
         cmdField.setText("");
     }
 
+
+    private void delRob1ActionListeners()
+    {
+        for(ActionListener al : rob1.getActionListeners())
+        {
+            rob1.removeActionListener(al);
+        }
+    }
+
+    private void delRob2ActionListeners()
+    {
+        for(ActionListener al : rob2.getActionListeners())
+        {
+            rob2.removeActionListener(al);
+        }
+    }
 }

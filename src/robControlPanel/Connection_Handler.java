@@ -5,17 +5,20 @@ import java.io.*;
 import java.net.Socket;
 
 
-public class Connection_Handler implements Runnable
+public class Connection_Handler
 {
+
+    Thread trob1,trob2;
+    GUI gui;
 
 
 
     private Rob_Connection rob1, rob2;
 
-    public Connection_Handler()
+    public Connection_Handler(GUI gui)
     {
-        rob1 = new Rob_Connection("169.254.1.1",2000);
-        rob2 = new Rob_Connection("169.254.1.2",2000);
+    this.gui = gui;
+
     }
 
     public static void main(String[] args)
@@ -23,19 +26,31 @@ public class Connection_Handler implements Runnable
 
     }
 
-    public void connect_Rob1() throws IOException
+    public void connect_Rob1()
     {
-        rob1.connect();
+
+        rob1 = new Rob_Connection("169.254.1.1",2000,gui);
+        trob1 = new Thread(rob1);
+        trob1.start();
     }
 
-    public void connect_Rob2() throws IOException
+    public void connect_Rob2()
     {
-        rob2.connect();
+
+        rob2 = new Rob_Connection("169.254.1.2",2000,gui);
+        trob2 = new Thread(rob2);
+        trob2.start();
     }
 
-    public void disconnect_Rob1() throws IOException
+    public void disconnect_Rob1()
     {
-        rob1.disconnect();
+        try {
+            rob1.disconnect();
+
+        }catch (IOException e)
+        {
+            System.out.println(e);
+        }
     }
 
     public void disconnect_Rob2() throws IOException
@@ -45,28 +60,16 @@ public class Connection_Handler implements Runnable
 
     public boolean connected_Rob1()
     {
+        if(rob1 == null)
+        {
+            return false;
+        }
         return rob1.connected();
     }
 
     public boolean connected_Rob2()
     {
         return rob2.connected();
-    }
-
-    @Override
-    public void run()
-    {
-        while (true)
-        {
-
-
-            try{
-                Thread.sleep(20);
-            }catch (InterruptedException e)
-            {
-                System.out.println(e);
-            }
-        }
     }
 
 
