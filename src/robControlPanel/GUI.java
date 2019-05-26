@@ -160,8 +160,9 @@ public class GUI extends JPanel
 
     private void sendToRob1()
     {
-        addText(cmdField.getText() + " -> Rob1");
-        cmdField.setText("");
+        /*addText(cmdField.getText() + " -> Rob1");
+        cmdField.setText("");*/
+        System.out.println((byte)(0335 & 0xFF));
     }
 
     private void sendToRob2()
