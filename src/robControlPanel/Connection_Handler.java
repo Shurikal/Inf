@@ -13,7 +13,7 @@ public class Connection_Handler
 
 
 
-    private Rob_Connection rob1, rob2;
+    private Rob_Connection2 rob1, rob2;
 
     public Connection_Handler(GUI gui)
     {
@@ -29,7 +29,7 @@ public class Connection_Handler
     public void connect_Rob1()
     {
 
-        rob1 = new Rob_Connection("169.254.1.1",2000,gui);
+        rob1 = new Rob_Connection2("localhost",5555,gui);
         trob1 = new Thread(rob1);
         trob1.start();
     }
@@ -37,7 +37,7 @@ public class Connection_Handler
     public void connect_Rob2()
     {
 
-        rob2 = new Rob_Connection("169.254.1.2",2000,gui);
+        rob2 = new Rob_Connection2("169.254.1.2",2000,gui);
         trob2 = new Thread(rob2);
         trob2.start();
     }

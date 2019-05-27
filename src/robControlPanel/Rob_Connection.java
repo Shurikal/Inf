@@ -11,18 +11,32 @@ public class Rob_Connection implements Runnable
     private static final byte HEARTBEAT = (byte)0xd3;
     private static final byte CMD = '$';
 
+    private static final byte SLIP_CMD = (byte)0xc0;
+
+    private static final byte ESCAPE = (byte)0xf1;
+    private static final byte ESCAPED_ESCAPE = (byte)0xf3;
+    private static final byte ESCAPED_OPEN = (byte)0xf2;
+    private static final byte ESCAPED_CLOSE = (byte)0xf5;
+    private static final byte ESCAPED_HEARTBEAT = (byte)0xe6;
+    private static final byte ESCAPED_CMD = (byte)0xf0;
+    private static final byte[] CMD_MODE ={ CMD, CMD, CMD };
+    private static final byte[] CMD_TERMINATOR = "\r\n".getBytes();
+    private static final byte[] CMD_MODE_ENTERED = "CMD".getBytes();
+    private static final byte[] CMD_RESULT_OK = "AOK".getBytes();
+
     private static final double TASK_PERIOD = 0.5;
 
     private  Socket socket;
 
     private GUI gui;
 
-    //public  PrintWriter out;
+    public DataOutputStream out;
 
-    public BufferedOutputStream out;
+    public DataInputStream in;
+
 
     //public  BufferedReader in;
-    public BufferedInputStream in;      //Bytewise Input
+    //public BufferedInputStream in;      //Bytewise Input
 
     private  String rob;
 
@@ -54,10 +68,7 @@ public class Rob_Connection implements Runnable
     public void sendCMD(int i) {
         try {
             out.write(i);
-        }catch (Exception e)
-        {
-
-        }
+        }catch (Exception e) { }
     }
 
     //Returns if socket is connected
@@ -74,17 +85,20 @@ public class Rob_Connection implements Runnable
 
         //Try to create a new socket
         try {
-        socket = new Socket(rob, port);
-        System.out.println("Socket erstellt");
-        //out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-            out = new BufferedOutputStream(socket.getOutputStream());
+            socket = new Socket(rob, port);
+            System.out.println("Socket erstellt");
+             //out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 
-        System.out.println("OUT erstellt");
-        //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new DataOutputStream(socket.getOutputStream());
 
-        in = new BufferedInputStream(socket.getInputStream(),32*1024);
+            //out = new DataOutputStream(System.out);
+            //in = new DataInputStream(socket.getInputStream());
 
-        System.out.println("IN erstellt");
+            in = new DataInputStream(System.in);
+            //System.out.println("OUT erstellt");
+            //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            //System.out.println("IN erstellt");
         } catch (IOException e) {
             gui.addText(e.getLocalizedMessage());
         }
@@ -92,33 +106,40 @@ public class Rob_Connection implements Runnable
         //Wenn kein socket erstellt werden kann
         if(socket == null) {
             gui.addText("Keine Verbindung möglich");
-            out = null;
-            in = null;
         }else{
 
             System.out.println("Connection running");
-            while (!socket.isClosed()) {
-                //String s = "";
+            long starttime = System.currentTimeMillis();
+            int c =0;
+            try {
 
+                out.write(SLIP_CMD);
+                gui.addText(""+ SLIP_CMD);
+                out.write(OPEN);
+                out.write(SLIP_CMD);
+                out.flush();
+
+            } catch (Exception e) {
+
+            }
+            while (!socket.isClosed()) {
                 int i = 0;
 
                 try {
+                    long oldtime = System.currentTimeMillis();
 
-                    //if (in.ready()) {
-                    if(in.available()>0){
-                        int c =0;
-                        System.out.println("For While");
+                    while(((i = in.read()) != -1) && !(System.currentTimeMillis() > oldtime+500)) {
 
-                        long oldtime = System.currentTimeMillis();
-                        while(((i = in.read()) != -1) && !(System.currentTimeMillis() > oldtime+50)) {
-                            //s = in.readLine(true);
+                        gui.addText(decompile(i));
 
-                            gui.addText(decompile(i));
-                            System.out.println(c);
-                            c++;
-                        }
-                        System.out.println("After While");
+                        c++;
                     }
+
+                    if(i ==-1){
+                        in = null;
+                        in =new DataInputStream(socket.getInputStream());
+                        }
+
                 } catch (IOException e) {
                     gui.addText(e.getLocalizedMessage());
                     System.out.println(e);
@@ -128,13 +149,19 @@ public class Rob_Connection implements Runnable
                 try {
                     //gui.addText(s);
                     if (tickCounter % (1 / TASK_PERIOD) == 0) {
-                        out.write(192);
-                        out.write(213);
-                        out.write(192);
+                        /*out.write((byte)0xc0);
+                        out.write(HEARTBEAT);
+                        out.write((byte)0xc0);*/
+                        out.write(SLIP_CMD);
+                        out.write(HEARTBEAT);
+                        out.write(SLIP_CMD);
+                        out.flush();
+
                         System.out.println("Heartbeat");
                     }
 
                     out.flush();
+                    //out.close();
                 } catch (Exception e)
                 {
 
@@ -165,4 +192,5 @@ public class Rob_Connection implements Runnable
         int b = (byte)i;
         return (""+ i);
     }
+
 }

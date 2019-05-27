@@ -12,7 +12,7 @@ public class GUI extends JPanel
 
     private JTextArea log;
 
-    private JButton rob1, rob2;
+    private JButton connectRob1, connectRob2, disconnectRob1,disconnectRob2;
 
     private JTextField cmdField;
 
@@ -23,13 +23,9 @@ public class GUI extends JPanel
         buttonMask = new boolean[4];
 
         this.setLayout(new BorderLayout());
-
         this.add(topPanel(),BorderLayout.NORTH);
-
         this.add(centerPanel(),BorderLayout.CENTER);
-
         this.add(botPanel(), BorderLayout.SOUTH);
-
         robs = new Connection_Handler(this);
 
     }
@@ -37,16 +33,22 @@ public class GUI extends JPanel
     private JPanel topPanel()
     {
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(1,2));
+        top.setLayout(new GridLayout(2,2));
 
-        rob1 = new JButton("Verbinde Rob1");
-        rob2 = new JButton("Verbinde Rob2");
+        connectRob1 = new JButton("Verbinde Rob1");
+        connectRob2 = new JButton("Verbinde Rob2");
 
-        rob1.addActionListener(e-> connectRob1());
-        rob2.addActionListener(e-> connectRob2());
+        disconnectRob1 = new JButton("Trenne Rob1");
+        disconnectRob2 = new JButton("Trenne Rob2");
 
-        top.add(rob1);
-        top.add(rob2);
+        connectRob1.addActionListener(e-> connectRob1());
+        connectRob2.addActionListener(e-> connectRob2());
+
+        top.add(connectRob1);
+        top.add(connectRob2);
+
+        top.add(disconnectRob1);
+        top.add(disconnectRob2);
 
         return top;
     }
@@ -59,7 +61,7 @@ public class GUI extends JPanel
         {
 
         }else{
-            rob1.setText("Verbinde ...");
+            connectRob1.setText("Verbinde ...");
 
 
             robs.connect_Rob1();
@@ -67,9 +69,9 @@ public class GUI extends JPanel
             {
                 System.out.println("Verbindung Rob1 erfolgreich");
                 addText("Verbindung Rob1 erfolgreich!");
-                rob1.setText("Trenne Rob1");
+                connectRob1.setText("Trenne Rob1");
             } else {
-                rob1.setText("Verbinde Rob1");
+                connectRob1.setText("Verbinde Rob1");
             }
 
 
@@ -82,18 +84,18 @@ public class GUI extends JPanel
         {
 
         }else{
-            rob2.setText("Verbinde ...");
+            connectRob2.setText("Verbinde ...");
             try {
                 robs.connect_Rob2();
                 if(robs.connected_Rob2())
                 {
                     addText("Verbindung Rob2 erfolgreich!");
-                    rob2.setText("Trenne Rob2");
+                    connectRob2.setText("Trenne Rob2");
                 }
             }catch (Exception e)
             {
                 addText(e.toString());
-                rob2.setText("Verbinde Rob2");
+                connectRob2.setText("Verbinde Rob2");
             }
         }
     }
@@ -174,17 +176,17 @@ public class GUI extends JPanel
 
     private void delRob1ActionListeners()
     {
-        for(ActionListener al : rob1.getActionListeners())
+        for(ActionListener al : connectRob1.getActionListeners())
         {
-            rob1.removeActionListener(al);
+            connectRob1.removeActionListener(al);
         }
     }
 
     private void delRob2ActionListeners()
     {
-        for(ActionListener al : rob2.getActionListeners())
+        for(ActionListener al : connectRob2.getActionListeners())
         {
-            rob2.removeActionListener(al);
+            connectRob2.removeActionListener(al);
         }
     }
 }
