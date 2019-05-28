@@ -8,8 +8,6 @@ public class Rob_Connection2 implements Runnable
     private String ip;
     private int port;
     private GUI gui;
-    private Rob_Sender sender;
-    private Rob_Receiver receiver;
     private Socket socket;
 
 
@@ -31,8 +29,11 @@ public class Rob_Connection2 implements Runnable
 
     }
 
-    public void disconnect() throws IOException
-    {}
+    public void disconnect() {
+        try {
+            socket.close();
+        }catch(Exception e){}
+    }
 
     public  boolean connected() {
         if(socket == null)

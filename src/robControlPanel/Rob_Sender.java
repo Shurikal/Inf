@@ -9,7 +9,6 @@ public class Rob_Sender implements Runnable {
     private DataOutputStream out;
     private Socket socket;
 
-
     private static final byte OPEN = (byte)0xd5;
     private static final byte CLOSE = (byte)0xd4;
     private static final byte HEARTBEAT = (byte)0xd3;

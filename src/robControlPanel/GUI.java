@@ -47,6 +47,8 @@ public class GUI extends JPanel
         top.add(connectRob1);
         top.add(connectRob2);
 
+        disconnectRob1.addActionListener(e-> robs.disconnect_Rob1());
+
         top.add(disconnectRob1);
         top.add(disconnectRob2);
 

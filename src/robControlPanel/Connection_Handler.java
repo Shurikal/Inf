@@ -44,13 +44,7 @@ public class Connection_Handler
 
     public void disconnect_Rob1()
     {
-        try {
             rob1.disconnect();
-
-        }catch (IOException e)
-        {
-            System.out.println(e);
-        }
     }
 
     public void disconnect_Rob2() throws IOException
