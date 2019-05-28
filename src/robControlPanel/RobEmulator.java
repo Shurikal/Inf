@@ -21,13 +21,15 @@ public class RobEmulator
             boolean b = false;
 
             try {
+                System.out.println("Warte auf Rob");
                 client = socket.accept();
+                System.out.println("Rob verbunden");
 
             }catch (Exception e){}
 
-            while(!socket.isClosed()){
+            if(!client.isClosed()){
                 new Thread(new Rob_Receiver(client)).start();
-                new Thread(new Rob_Sender(client)).start();
+                new Thread(new Rob_Sender(client,true)).start();
             }
         }
 
