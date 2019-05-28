@@ -29,7 +29,7 @@ public class Connection_Handler
     public void connect_Rob1()
     {
 
-        rob1 = new Rob_Connection2("localhost",5555,gui);
+        rob1 = new Rob_Connection2("169.254.1.1",2000,gui);
         trob1 = new Thread(rob1);
         trob1.start();
     }
