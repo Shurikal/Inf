@@ -55,10 +55,12 @@ public class Rob_Sender implements Runnable {
                 cmd.writeCmd(22);
             }
 
+            sendHeartbeat();
+
             writeToOutput();
 
             long oldSysTime = System.currentTimeMillis();
-            while (System.currentTimeMillis() < oldSysTime + 1000) {
+            while (System.currentTimeMillis() < oldSysTime + 20) {
                 try {
                     Thread.sleep(1);
                 } catch (Exception e) {
@@ -70,8 +72,10 @@ public class Rob_Sender implements Runnable {
     }
 
 
-    private void sendHeartbeat() throws IOException {
-        out.write(HEARTBEAT);
+    private void sendHeartbeat(){
+        try {
+            out.write(HEARTBEAT);
+        } catch (Exception e){}
     }
 
     public synchronized void sendByte(Byte b){

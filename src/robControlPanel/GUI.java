@@ -12,7 +12,7 @@ public class GUI extends JPanel
 
     private JTextArea log;
 
-    private JButton connectRob1, connectRob2, disconnectRob1,disconnectRob2;
+    private JButton connectRob1, connectRob2, disconnectRob1,disconnectRob2, controlPanel;
 
     private JTextField cmdField;
 
@@ -35,19 +35,27 @@ public class GUI extends JPanel
     private JPanel topPanel()
     {
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(2,2));
+        top.setLayout(new GridLayout(2,3));
 
         connectRob1 = new JButton("Verbinde Rob1");
         connectRob2 = new JButton("Verbinde Rob2");
 
-        disconnectRob1 = new JButton("Trenne Rob1");
-        disconnectRob2 = new JButton("Trenne Rob2");
-
+        controlPanel = new JButton("Öffne ControlPanel");
         connectRob1.addActionListener(e-> connectRob1());
         connectRob2.addActionListener(e-> connectRob2());
 
+        controlPanel.addActionListener(e-> openControlPanel1());
+
+        disconnectRob1 = new JButton("Trenne Rob1");
+        disconnectRob2 = new JButton("Trenne Rob2");
+
+
+
+
+
         top.add(connectRob1);
         top.add(connectRob2);
+        top.add(controlPanel);
 
         disconnectRob1.addActionListener(e-> robs.disconnect_Rob1());
 
@@ -59,27 +67,7 @@ public class GUI extends JPanel
 
     private void connectRob1()
     {
-
-        System.out.println("Verbinde...");
-        if(robs.connected_Rob1())
-        {
-
-        }else{
-            connectRob1.setText("Verbinde ...");
-
-
-            robs.connect_Rob1();
-            if(robs.connected_Rob1())
-            {
-                System.out.println("Verbindung Rob1 erfolgreich");
-                addText("Verbindung Rob1 erfolgreich!");
-                connectRob1.setText("Trenne Rob1");
-            } else {
-                connectRob1.setText("Verbinde Rob1");
-            }
-
-
-        }
+        robs.connect_Rob1();
     }
 
     private void connectRob2()
@@ -191,5 +179,9 @@ public class GUI extends JPanel
         {
             connectRob2.removeActionListener(al);
         }
+    }
+
+    private void openControlPanel1(){
+        new ControlPanel(robs.getRob1());
     }
 }

@@ -149,11 +149,4 @@ public class SLIP {
     private static final byte ESC = (byte)0333;
     private static final byte ESC_END = (byte)0334;
     private static final byte ESC_ESC = (byte)0335;
-
-
-    /*private static final byte END = (byte)192;
-    private static final byte ESC = (byte)219;
-    private static final byte ESC_END = (byte)220;
-    private static final byte ESC_ESC = (byte)221;*/
-
 }

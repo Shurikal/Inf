@@ -45,7 +45,7 @@ public class Rob_Receiver implements Runnable
         while(!socket.isClosed() && socket !=null){
             try{
                 long oldSysTime = System.currentTimeMillis();
-                while(((i = in.read()) != -1) && System.currentTimeMillis() < oldSysTime+ 50) {
+                while(((i = in.read()) != -1) /*&& System.currentTimeMillis() < oldSysTime+ 50*/) {
                     addByte((byte)i);
                 }
             }catch (Exception e) {
@@ -57,7 +57,7 @@ public class Rob_Receiver implements Runnable
             }
 
             long oldSysTime = System.currentTimeMillis();
-            while(System.currentTimeMillis() < oldSysTime + 200)
+            while(System.currentTimeMillis() < oldSysTime + 20)
             {
                 try {
                     Thread.sleep(1);
