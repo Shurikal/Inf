@@ -27,11 +27,12 @@ public class Connection_Handler implements Runnable
     }
 
     public void disconnect_Rob1() {
+        //TODO --- null abfrage!
         rob1.disconnect();
         rob1 = null;
     }
 
-    public void disconnect_Rob2() throws IOException {
+    public void disconnect_Rob2() {
         rob2.disconnect();
         rob2 = null;
     }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class GUI extends JPanel
 {
@@ -52,6 +53,7 @@ public class GUI extends JPanel
         top.add(controlPanel);
 
         disconnectRob1.addActionListener(e-> robs.disconnect_Rob1());
+        disconnectRob2.addActionListener(e-> robs.disconnect_Rob2());
 
         top.add(disconnectRob1);
         top.add(disconnectRob2);
@@ -61,10 +63,16 @@ public class GUI extends JPanel
 
     private void connectRob1() {
         robs.connect_Rob1();
+        if(!robs.connected_Rob1()){
+            addText("Could not create socket");
+        }
     }
 
     private void connectRob2() {
         robs.connect_Rob1();
+        if(!robs.connected_Rob2()){
+            addText("Could not create socket");
+        }
     }
 
     private JPanel centerPanel() {
@@ -115,11 +123,14 @@ public class GUI extends JPanel
     }
 
     public void addText(String s) {
-        log.append( LocalTime.now()+ " : " + s + "\r\n");
+        log.append( LocalTime.now().format(DateTimeFormatter.ofPattern("H:m:s.S"))+ " : " + s + "\r\n");
     }
 
     private void sendToAll() {
-        addText(cmdField.getText() + " -> all");
+        int i = Integer.parseInt(cmdField.getText());
+        Connection_Handler.sendDataRob1(i);
+        Connection_Handler.sendDataRob2(i);
+        addText(i+ " -> all");
         cmdField.setText("");
     }
 
@@ -130,7 +141,9 @@ public class GUI extends JPanel
     }
 
     private void sendToRob2() {
-
+        addText(cmdField.getText() + " -> Rob1");
+        Connection_Handler.sendDataRob2(Integer.parseInt(cmdField.getText()));
+        cmdField.setText("");
     }
 
     private void openControlPanel1(){

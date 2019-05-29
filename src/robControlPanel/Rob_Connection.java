@@ -23,11 +23,11 @@ public class Rob_Connection
 
         try{
             socket = new Socket(ip, port);
+            new Thread(new Rob_Receiver(socket,rx,cmd)).start();
+            new Thread(new Rob_Sender(socket,tx,cmd)).start();
         }catch (Exception e){
             System.out.println("Could not create socket");
         }
-        new Thread(new Rob_Receiver(socket,rx,cmd)).start();
-        new Thread(new Rob_Sender(socket,tx,cmd)).start();
     }
 
     public void disconnect() {
