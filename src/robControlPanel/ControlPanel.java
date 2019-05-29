@@ -119,10 +119,13 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
     }
 
     public void run() {
-        System.out.println("Running");
         while (true) {
             this.requestFocus();
 
+            if(!this.isVisible()){
+                this.dispose();
+                break;
+            }
 
             if(vorwaerts && !(rueckwaerts || guz || uz)){
                 Connection_Handler.sendDataRob1(VORWAERTS);
@@ -150,7 +153,6 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
             } catch (Exception e) {
             }
         }
-
     }
 }
 

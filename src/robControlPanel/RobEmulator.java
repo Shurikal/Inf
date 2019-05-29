@@ -15,8 +15,7 @@ public class RobEmulator
 
     private ByteFifo tx,rx;
 
-    public RobEmulator()
-    {
+    public RobEmulator() {
 
         tx = new ByteFifo(2047);
         rx = new ByteFifo(2047);

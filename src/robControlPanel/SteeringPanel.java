@@ -14,13 +14,11 @@ public class SteeringPanel extends JPanel implements KeyListener
         buttonMask = new boolean[4];
     }
 
-    public void keyTyped(KeyEvent e)
-    {
+    public void keyTyped(KeyEvent e) {
 
     }
 
-    public void keyPressed(KeyEvent e)
-    {
+    public void keyPressed(KeyEvent e) {
         switch(e.getKeyChar())
         {
             case 'q':
@@ -62,8 +60,7 @@ public class SteeringPanel extends JPanel implements KeyListener
         }
     }
 
-    public void keyReleased(KeyEvent e)
-    {
+    public void keyReleased(KeyEvent e) {
         switch(e.getKeyChar())
         {
 

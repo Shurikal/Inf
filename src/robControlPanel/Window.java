@@ -5,8 +5,7 @@ import java.awt.*;
 
 public class Window
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         JFrame fenster = new JFrame("Java Proxy");
 
         Container contentpane = fenster.getContentPane();

@@ -22,8 +22,6 @@ public class Rob_Sender implements Runnable {
 
     private boolean isServer;
 
-    private static final byte SLIP_CMD = (byte)0xc0;
-
     private ByteFifo tx;
 
     private CmdInt cmd;
@@ -41,21 +39,22 @@ public class Rob_Sender implements Runnable {
         this.isServer = isServer;
     }
 
-    public void run() {   //Try to create a new Output
+    public void run() {
         try {
             out = new DataOutputStream(socket.getOutputStream());
             System.out.println("Output Stream erstellt");
         } catch (Exception e) {
             System.out.println("Could not create Input");
         }
-
+        long lastHeartBeat = System.currentTimeMillis();
         while (socket !=null && !socket.isClosed()) {
 
-            if(isServer){
-                cmd.writeCmd(22);
+            if(System.currentTimeMillis() > lastHeartBeat + 999) {
+                sendHeartbeat();
+                if(isServer){
+                    cmd.writeCmd(22);
+                }
             }
-
-            sendHeartbeat();
 
             writeToOutput();
 
@@ -70,7 +69,6 @@ public class Rob_Sender implements Runnable {
         }
         System.out.println("Socket closed -> Output Thread terminated");
     }
-
 
     private void sendHeartbeat(){
         try {

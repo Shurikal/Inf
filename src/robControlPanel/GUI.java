@@ -127,23 +127,36 @@ public class GUI extends JPanel
     }
 
     private void sendToAll() {
-        int i = Integer.parseInt(cmdField.getText());
-        Connection_Handler.sendDataRob1(i);
-        Connection_Handler.sendDataRob2(i);
-        addText(i+ " -> all");
-        cmdField.setText("");
+        if(robs.connected_Rob1() && robs.connected_Rob2()){
+            try {
+                int i = Integer.parseInt(cmdField.getText());
+                Connection_Handler.sendDataRob1(i);
+                Connection_Handler.sendDataRob2(i);
+                addText(i + " -> all");
+                cmdField.setText("");
+            }catch (NumberFormatException e){}
+        }
     }
 
     private void sendToRob1() {
-        addText(cmdField.getText() + " -> Rob1");
-        Connection_Handler.sendDataRob1(Integer.parseInt(cmdField.getText()));
-        cmdField.setText("");
+        if(robs.connected_Rob1()){
+            try {
+                Connection_Handler.sendDataRob1(Integer.parseInt(cmdField.getText()));
+                addText(cmdField.getText() + " -> Rob1");
+                cmdField.setText("");
+            }catch (NumberFormatException e){}
+        }
     }
 
     private void sendToRob2() {
-        addText(cmdField.getText() + " -> Rob1");
-        Connection_Handler.sendDataRob2(Integer.parseInt(cmdField.getText()));
-        cmdField.setText("");
+        if(robs.connected_Rob2()){
+            try{
+                Connection_Handler.sendDataRob2(Integer.parseInt(cmdField.getText()));
+                addText(cmdField.getText() + " -> Rob2");
+                cmdField.setText("");
+            }catch (NumberFormatException e){ }
+        }
+
     }
 
     private void openControlPanel1(){

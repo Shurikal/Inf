@@ -27,19 +27,21 @@ public class Connection_Handler implements Runnable
     }
 
     public void disconnect_Rob1() {
-        //TODO --- null abfrage!
-        rob1.disconnect();
+        if(rob1!=null) {
+            rob1.disconnect();
+        }
         rob1 = null;
     }
 
     public void disconnect_Rob2() {
+        if(rob2!=null){
         rob2.disconnect();
+        }
         rob2 = null;
     }
 
     public boolean connected_Rob1() {
-        if(rob1 == null)
-        {
+        if(rob1 == null) {
             return false;
         }
         return rob1.connected();
@@ -62,6 +64,9 @@ public class Connection_Handler implements Runnable
     }
 
     public boolean connected_Rob2() {
+        if(rob2 == null) {
+            return false;
+        }
         return rob2.connected();
     }
 
