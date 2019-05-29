@@ -1,5 +1,6 @@
 package robControlPanel;
 
+import java.awt.color.CMMException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -10,15 +11,22 @@ public class RobEmulator
 
     private Socket client;
 
+    private CmdInt cmd;
+
+    private ByteFifo tx,rx;
+
     public RobEmulator()
     {
+
+        tx = new ByteFifo(2047);
+        rx = new ByteFifo(2047);
+        cmd = new CmdInt(new SLIP(rx, tx));
+
         try {
             socket = new ServerSocket(5555);
         }catch(Exception e) { }
 
         while(true){
-
-            boolean b = false;
 
             try {
                 System.out.println("Warte auf Rob");
@@ -28,9 +36,20 @@ public class RobEmulator
             }catch (Exception e){}
 
             if(!client.isClosed()){
-                new Thread(new Rob_Receiver(client)).start();
-                new Thread(new Rob_Sender(client,true)).start();
+                new Thread(new Rob_Receiver(client,rx,cmd)).start();
+                new Thread(new Rob_Sender(client,tx,cmd,true)).start();
             }
+
+            while(!client.isClosed()){
+                if (cmd.readCmd() == CmdInt.Type.Cmd) {
+                    System.out.println(cmd.getInt());
+                }
+
+                try{
+                    Thread.sleep(10);
+                }catch(Exception e){}
+            }
+            System.out.println("Connection closed");
         }
 
     }

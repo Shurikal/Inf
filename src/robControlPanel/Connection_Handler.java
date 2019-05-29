@@ -1,24 +1,17 @@
 package robControlPanel;
 
-
 import java.io.*;
-import java.net.Socket;
 
-
-public class Connection_Handler
+public class Connection_Handler implements Runnable
 {
 
-    Thread trob1,trob2;
     GUI gui;
-
-
 
     private Rob_Connection2 rob1, rob2;
 
     public Connection_Handler(GUI gui)
     {
     this.gui = gui;
-
     }
 
     public static void main(String[] args)
@@ -28,18 +21,12 @@ public class Connection_Handler
 
     public void connect_Rob1()
     {
-
-        rob1 = new Rob_Connection2("localhost",5555,gui);
-        trob1 = new Thread(rob1);
-        trob1.start();
+        rob1 = new Rob_Connection2("localhost",5555);
     }
 
     public void connect_Rob2()
     {
-
-        rob2 = new Rob_Connection2("169.254.1.2",2000,gui);
-        trob2 = new Thread(rob2);
-        trob2.start();
+        rob2 = new Rob_Connection2("169.254.1.2",2000);
     }
 
     public void disconnect_Rob1()
@@ -66,14 +53,24 @@ public class Connection_Handler
         return rob2.connected();
     }
 
+    public void sendDataRob1(int i){
+        rob1.cmd.writeCmd(i);
+    }
 
-    /*public boolean writeCmd(byte header, int cmd) {
-        tx[0] = header;  //Default 0x11
-        tx[1] = (byte) (cmd >> 24);
-        tx[2] = (byte) (cmd >> 16);
-        tx[3] = (byte) (cmd >> 8);
-        tx[4] = (byte) cmd;
-        return slip.write(tx, 0, 5);
-    }*/
+    @Override
+    public void run() {
+        while(true){
 
+            if(rob1 !=null) {
+                while (rob1.cmd.readCmd() == CmdInt.Type.Cmd) {
+                    int i = rob1.cmd.getInt();
+                    gui.addText(i + " <- Rob1");
+                }
+            }
+
+            try{
+                Thread.sleep(50);
+            }catch (Exception e){}
+        }
+    }
 }

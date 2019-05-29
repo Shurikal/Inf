@@ -7,7 +7,6 @@ public class Rob_Receiver implements Runnable
 {
     private DataInputStream in;
     private Socket socket;
-    private GUI gui;
 
     private static final byte OPEN = (byte)0xd5;
     private static final byte CLOSE = (byte)0xd4;
@@ -26,18 +25,10 @@ public class Rob_Receiver implements Runnable
 
     private boolean rxEscapeMode = false;
 
-    public Rob_Receiver(Socket socket, GUI gui) {
+    public Rob_Receiver(Socket socket, ByteFifo rx, CmdInt cmd) {
         this.socket = socket;
-        this.gui = gui;
-        rx = new ByteFifo(2047);
-        this.cmd = new CmdInt(new SLIP(rx, null));
-    }
-
-    public Rob_Receiver(Socket socket) {
-        this.socket = socket;
-        this.gui = null;
-        rx = new ByteFifo(2047);
-        this.cmd = new CmdInt(new SLIP(rx, null));
+        this.rx = rx;
+        this.cmd = cmd;
     }
 
     public void run(){
@@ -51,7 +42,6 @@ public class Rob_Receiver implements Runnable
 
         int i;
 
-
         while(!socket.isClosed() && socket !=null){
             try{
                 long oldSysTime = System.currentTimeMillis();
@@ -64,10 +54,6 @@ public class Rob_Receiver implements Runnable
 
             while(cmd.readCmd() == CmdInt.Type.Cmd){
                 System.out.println("CMD read");
-                if(gui!=null) {
-
-                    gui.addText("" + cmd.getInt());
-                }
             }
 
             long oldSysTime = System.currentTimeMillis();

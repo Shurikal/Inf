@@ -27,6 +27,8 @@ public class GUI extends JPanel
         this.add(centerPanel(),BorderLayout.CENTER);
         this.add(botPanel(), BorderLayout.SOUTH);
         robs = new Connection_Handler(this);
+        new Thread(robs).start();
+
 
     }
 
@@ -164,15 +166,14 @@ public class GUI extends JPanel
 
     private void sendToRob1()
     {
-        /*addText(cmdField.getText() + " -> Rob1");
-        cmdField.setText("");*/
-        System.out.println((byte)(0335 & 0xFF));
+        addText(cmdField.getText() + " -> Rob1");
+        robs.sendDataRob1(Integer.parseInt(cmdField.getText()));
+        cmdField.setText("");
     }
 
     private void sendToRob2()
     {
-        addText(cmdField.getText() + " -> Rob2");
-        cmdField.setText("");
+
     }
 
 

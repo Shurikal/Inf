@@ -1,37 +1,46 @@
 package robControlPanel;
 
-import java.io.IOException;
 import java.net.Socket;
 
-public class Rob_Connection2 implements Runnable
+public class Rob_Connection2
 {
     private String ip;
     private int port;
     private GUI gui;
     private Socket socket;
 
+    public CmdInt cmd;
 
-    public Rob_Connection2(String ip, int port, GUI gui) {
+    private ByteFifo rx,tx;
+
+    private String name;
+
+    public Rob_Connection2(String ip, int port) {
         this.ip = ip;
         this.port = port;
-        this.gui = gui;
-    }
+        this.name = name;
+        rx = new ByteFifo(2047);
+        tx = new ByteFifo(2047);
 
-    public void run(){
+        cmd = new CmdInt(new SLIP(rx, tx));
 
         try{
             socket = new Socket(ip, port);
         }catch (Exception e){
             System.out.println("Could not create socket");
         }
-        new Thread(new Rob_Receiver(socket,gui)).start();
-        new Thread(new Rob_Sender(socket,gui)).start();
+        new Thread(new Rob_Receiver(socket,rx,cmd)).start();
+        new Thread(new Rob_Sender(socket,tx,cmd)).start();
+    }
 
+    public void sendData(int i){
+        cmd.writeCmd(i);
     }
 
     public void disconnect() {
         try {
             socket.close();
+
         }catch(Exception e){}
     }
 

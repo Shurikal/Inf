@@ -28,28 +28,16 @@ public class Rob_Sender implements Runnable {
 
     private CmdInt cmd;
 
-    private GUI gui;
-
-
-    public Rob_Sender(Socket socket, GUI gui) {
+    public Rob_Sender(Socket socket, ByteFifo tx, CmdInt cmd) {
         this.socket = socket;
-        this.gui = gui;
-        tx = new ByteFifo(2047);
-        cmd = new CmdInt(new SLIP(null, tx));
+        this.tx = tx;
+        this.cmd = cmd;
     }
 
-    public Rob_Sender(Socket socket) {
+    public Rob_Sender(Socket socket,ByteFifo tx, CmdInt cmd,Boolean isServer) {
         this.socket = socket;
-        this.gui = null;
-        tx = new ByteFifo(2047);
-        cmd = new CmdInt(new SLIP(null, tx));
-    }
-
-    public Rob_Sender(Socket socket,Boolean isServer) {
-        this.socket = socket;
-        this.gui = null;
-        tx = new ByteFifo(2047);
-        cmd = new CmdInt(new SLIP(null, tx));
+        this.tx = tx;
+        this.cmd = cmd;
         this.isServer = isServer;
     }
 
@@ -60,8 +48,6 @@ public class Rob_Sender implements Runnable {
         } catch (Exception e) {
             System.out.println("Could not create Input");
         }
-
-        int i;
 
         while (!socket.isClosed() && socket !=null) {
 
