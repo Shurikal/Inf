@@ -44,7 +44,7 @@ public class CmdInt {
      * @param cmd integer to send
      * @return false if buffer is full, true otherwise
      */
-    public boolean writeCmd(int cmd) {
+    public synchronized boolean writeCmd(int cmd) {
         return writeCmd(Type.Cmd.get(), cmd);
     }
 

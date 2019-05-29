@@ -2,7 +2,7 @@ package robControlPanel;
 
 import java.net.Socket;
 
-public class Rob_Connection2
+public class Rob_Connection
 {
     private String ip;
     private int port;
@@ -13,7 +13,7 @@ public class Rob_Connection2
 
     private ByteFifo rx,tx;
 
-    public Rob_Connection2(String ip, int port) {
+    public Rob_Connection(String ip, int port) {
         this.ip = ip;
         this.port = port;
         rx = new ByteFifo(2047);

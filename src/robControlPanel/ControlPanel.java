@@ -23,9 +23,9 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
 
     private Timer timer;
 
-    private Rob_Connection2 rob;
+    private Rob_Connection rob;
 
-    public ControlPanel(Rob_Connection2 rob) {
+    public ControlPanel(Rob_Connection rob) {
 
         buttonMask = new boolean[6];
         setPreferredSize(new Dimension(200, 200));

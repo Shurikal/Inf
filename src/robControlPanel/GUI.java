@@ -18,8 +18,7 @@ public class GUI extends JPanel
 
     private Connection_Handler robs;
 
-    public GUI()
-    {
+    public GUI() {
         buttonMask = new boolean[4];
 
         this.setLayout(new BorderLayout());
@@ -32,8 +31,7 @@ public class GUI extends JPanel
 
     }
 
-    private JPanel topPanel()
-    {
+    private JPanel topPanel() {
         JPanel top = new JPanel();
         top.setLayout(new GridLayout(2,3));
 
@@ -49,10 +47,6 @@ public class GUI extends JPanel
         disconnectRob1 = new JButton("Trenne Rob1");
         disconnectRob2 = new JButton("Trenne Rob2");
 
-
-
-
-
         top.add(connectRob1);
         top.add(connectRob2);
         top.add(controlPanel);
@@ -65,35 +59,15 @@ public class GUI extends JPanel
         return top;
     }
 
-    private void connectRob1()
-    {
+    private void connectRob1() {
         robs.connect_Rob1();
     }
 
-    private void connectRob2()
-    {
-        if(robs.connected_Rob2())
-        {
-
-        }else{
-            connectRob2.setText("Verbinde ...");
-            try {
-                robs.connect_Rob2();
-                if(robs.connected_Rob2())
-                {
-                    addText("Verbindung Rob2 erfolgreich!");
-                    connectRob2.setText("Trenne Rob2");
-                }
-            }catch (Exception e)
-            {
-                addText(e.toString());
-                connectRob2.setText("Verbinde Rob2");
-            }
-        }
+    private void connectRob2() {
+        robs.connect_Rob1();
     }
 
-    private JPanel centerPanel()
-    {
+    private JPanel centerPanel() {
         JPanel center = new JPanel();
 
         center.setLayout(new BorderLayout());
@@ -108,8 +82,7 @@ public class GUI extends JPanel
         return center;
     }
 
-    private JPanel botPanel()
-    {
+    private JPanel botPanel() {
         JPanel bot = new JPanel();
         bot.setLayout(new GridLayout(1,2));
 
@@ -141,44 +114,23 @@ public class GUI extends JPanel
         return bot;
     }
 
-    public void addText(String s)
-    {
+    public void addText(String s) {
         log.append( LocalTime.now()+ " : " + s + "\r\n");
     }
 
-    private void sendToAll()
-    {
+    private void sendToAll() {
         addText(cmdField.getText() + " -> all");
         cmdField.setText("");
     }
 
-    private void sendToRob1()
-    {
+    private void sendToRob1() {
         addText(cmdField.getText() + " -> Rob1");
-        robs.sendDataRob1(Integer.parseInt(cmdField.getText()));
+        Connection_Handler.sendDataRob1(Integer.parseInt(cmdField.getText()));
         cmdField.setText("");
     }
 
-    private void sendToRob2()
-    {
+    private void sendToRob2() {
 
-    }
-
-
-    private void delRob1ActionListeners()
-    {
-        for(ActionListener al : connectRob1.getActionListeners())
-        {
-            connectRob1.removeActionListener(al);
-        }
-    }
-
-    private void delRob2ActionListeners()
-    {
-        for(ActionListener al : connectRob2.getActionListeners())
-        {
-            connectRob2.removeActionListener(al);
-        }
     }
 
     private void openControlPanel1(){
