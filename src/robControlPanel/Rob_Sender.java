@@ -51,6 +51,7 @@ public class Rob_Sender implements Runnable {
 
             if(System.currentTimeMillis() > lastHeartBeat + 999) {
                 sendHeartbeat();
+                lastHeartBeat = System.currentTimeMillis();
                 if(isServer){
                     cmd.writeCmd(22);
                 }

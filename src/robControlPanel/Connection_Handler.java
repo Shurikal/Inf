@@ -1,7 +1,5 @@
 package robControlPanel;
 
-import java.io.*;
-
 public class Connection_Handler implements Runnable
 {
 
@@ -19,7 +17,7 @@ public class Connection_Handler implements Runnable
     }
 
     public void connect_Rob1() {
-        rob1 = new Rob_Connection("169.254.1.1",2000);
+        rob1 = new Rob_Connection("127.0.0.1",5555);
     }
 
     public void connect_Rob2() {

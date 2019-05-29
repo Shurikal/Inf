@@ -116,7 +116,6 @@ public class GUI extends JPanel
         subBot.add(sendToRob1);
         subBot.add(sendToRob2);
 
-
         bot.add(cmdField);
         bot.add(subBot);
         return bot;
@@ -154,12 +153,12 @@ public class GUI extends JPanel
                 Connection_Handler.sendDataRob2(Integer.parseInt(cmdField.getText()));
                 addText(cmdField.getText() + " -> Rob2");
                 cmdField.setText("");
-            }catch (NumberFormatException e){ }
+            }catch (NumberFormatException e){}
         }
 
     }
 
     private void openControlPanel1(){
-        new ControlPanel(robs.getRob1());
+        new ControlPanel();
     }
 }

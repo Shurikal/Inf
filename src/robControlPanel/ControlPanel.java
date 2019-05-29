@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class ControlPanel extends JFrame implements KeyListener, Runnable {
-    private boolean[] buttonMask;
 
     private boolean vorwaerts,rueckwaerts,uz,guz,spanne,loese,hole;
 
@@ -21,13 +20,7 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
     int KURVER_UZ				= 4206;
     int KURVER_GUZ				= 4207;
 
-    private Timer timer;
-
-    private Rob_Connection rob;
-
-    public ControlPanel(Rob_Connection rob) {
-
-        buttonMask = new boolean[6];
+    public ControlPanel() {
         setPreferredSize(new Dimension(200, 200));
 
 
@@ -35,11 +28,6 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
         this.setFocusable(true);
 
         setLayout(null);
-
-        /*timer = new Timer(50, e -> {
-            update();
-        });
-        timer.start();*/
 
         this.pack();
         this.setVisible(true);
@@ -57,10 +45,8 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
         System.out.println(e);
         switch (e.getKeyChar()) {
             case 'q':
-                buttonMask[4] = true;
                 break;
             case 'e':
-                buttonMask[5] = true;
                 break;
             case 'r':
                 hole = true;
@@ -100,10 +86,8 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
                 break;
 
             case 'q':
-                buttonMask[4] = false;
                 break;
             case 'e':
-                buttonMask[5] = false;
                 break;
             case 'a':
                 guz = false;
@@ -112,8 +96,6 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
                 uz = false;
                 break;
             default:
-
-
         }
 
     }
@@ -146,7 +128,6 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
             }else {
                 Connection_Handler.sendDataRob1(0);
             }
-
 
             try {
                 Thread.sleep(50);

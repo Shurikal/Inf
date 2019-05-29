@@ -32,6 +32,8 @@ public class Rob_Connection
 
     public void disconnect() {
         try {
+            socket.getOutputStream().close();
+            socket.getInputStream().close();
             socket.close();
 
         }catch(Exception e){}
