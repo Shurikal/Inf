@@ -42,30 +42,32 @@ public class Rob_Receiver implements Runnable
 
         int i;
 
-        while(!socket.isClosed() && socket !=null){
-            try{
+
+            while(socket !=null && !socket.isClosed()){
+                try{
+                    long oldSysTime = System.currentTimeMillis();
+                    while(((i = in.read()) != -1) /*&& System.currentTimeMillis() < oldSysTime+ 50*/) {
+                        addByte((byte)i);
+                    }
+                }catch (Exception e) {
+
+                }
+
+                while(cmd.readCmd() == CmdInt.Type.Cmd){
+                    System.out.println("CMD read");
+                }
+
                 long oldSysTime = System.currentTimeMillis();
-                while(((i = in.read()) != -1) /*&& System.currentTimeMillis() < oldSysTime+ 50*/) {
-                    addByte((byte)i);
-                }
-            }catch (Exception e) {
-
-            }
-
-            while(cmd.readCmd() == CmdInt.Type.Cmd){
-                System.out.println("CMD read");
-            }
-
-            long oldSysTime = System.currentTimeMillis();
-            while(System.currentTimeMillis() < oldSysTime + 20)
-            {
-                try {
-                    Thread.sleep(1);
-                }catch(Exception e){
-                    System.out.println("Could not sleep...");
+                while(System.currentTimeMillis() < oldSysTime + 20)
+                {
+                    try {
+                        Thread.sleep(1);
+                    }catch(Exception e){
+                        System.out.println("Could not sleep...");
+                    }
                 }
             }
-        }
+
         System.out.println("Socket closed -> Input Thread terminated");
     }
 

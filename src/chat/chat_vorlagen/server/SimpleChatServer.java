@@ -4,7 +4,6 @@ import java.net.*;
 import java.util.*;
 
 import bildverarbeitung.Settings;
-import chat.chat_vorlagen.*;
 import chat.chat_vorlagen.message.*;
 
 import java.util.Observable;

@@ -49,7 +49,7 @@ public class Rob_Sender implements Runnable {
             System.out.println("Could not create Input");
         }
 
-        while (!socket.isClosed() && socket !=null) {
+        while (socket !=null && !socket.isClosed()) {
 
             if(isServer){
                 cmd.writeCmd(22);
