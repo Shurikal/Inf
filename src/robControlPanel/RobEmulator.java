@@ -44,7 +44,7 @@ public class RobEmulator
             while(!client.isClosed()){
 
                  if (cmd.readCmd() == CmdInt.Type.Cmd) {
-                    //System.out.println(cmd.getInt());
+                    System.out.println(cmd.getInt());
                 }
 
                 try{
