@@ -21,6 +21,10 @@ public class GUI
 
     private Connection_Handler robs;
 
+    private boolean autoscroll;
+
+    private JScrollPane scrollPane;
+
     public GUI() {
         fenster = new JFrame("Java Proxy");
 
@@ -61,16 +65,19 @@ public class GUI
         disconnectRob1 = new JButton("Trenne Rob1");
         disconnectRob2 = new JButton("Trenne Rob2");
 
+        JButton autoscrollButton = new JButton("Autoscroll");
+        autoscrollButton.addActionListener(e-> autoscroll=!autoscroll);
+
         top.add(connectRob1);
         top.add(connectRob2);
         top.add(controlPanel);
 
-        disconnectRob1.addActionListener(e-> rob1.disconnect());
-        disconnectRob2.addActionListener(e-> rob2.disconnect());
+        disconnectRob1.addActionListener(e-> {if(rob1!=null){rob1.disconnect();}});
+        disconnectRob2.addActionListener(e-> {if(rob2!=null){rob2.disconnect();}});
 
         top.add(disconnectRob1);
         top.add(disconnectRob2);
-
+        top.add(autoscrollButton);
         return top;
     }
 
@@ -100,7 +107,7 @@ public class GUI
         log = new JTextArea();
         log.setEditable(false);
 
-        JScrollPane scrollPane = new JScrollPane(log);
+        scrollPane = new JScrollPane(log);
 
         center.add(scrollPane,BorderLayout.CENTER);
 
@@ -220,4 +227,13 @@ public class GUI
     }
 
     private void zeigeInfo(){}
+
+    public void autoscroll(){
+        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+        vertical.setValue( vertical.getMaximum() );
+    }
+
+    public boolean autoScrollEnabled(){
+        return autoscroll;
+    }
 }
