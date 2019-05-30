@@ -105,10 +105,12 @@ public class SLIP {
             if (escaping) {
                 switch (b) {
                     case ESC_END:
+                        i -=1; //Hat gefehlt
                         packet[offset + i] = END;
                         break;
 
                     case ESC_ESC:
+                        i -=1; //Hat gefehlt
                         packet[offset + i] = ESC;
                         break;
 
