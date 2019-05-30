@@ -28,7 +28,7 @@ public class Connection_Handler implements Runnable
                 if(rob!= null){
                     while(rob.cmd.readCmd() == CmdInt.Type.Cmd){
                         int i = rob.cmd.getInt();
-                        gui.addText(i + " <- Rob");
+                        gui.addText(i + " <- " +rob.getName());
 
                         for(Rob_Connection rob1 : robs){
                             if(rob1 != rob){

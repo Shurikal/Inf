@@ -75,7 +75,7 @@ public class GUI
     }
 
     private void connectRob1() {
-        rob1 = new Rob_Connection("localhost",5555);
+        rob1 = new Rob_Connection("localhost",5555,"Rob1");
         if(!rob1.connected()){
             addText("Could not create socket");
         }else{
@@ -84,7 +84,7 @@ public class GUI
     }
 
     private void connectRob2() {
-        rob2 = new Rob_Connection("169.254.1.2",2000);
+        rob2 = new Rob_Connection("169.254.1.2",2000,"Rob2");
         if(!rob1.connected()){
             addText("Could not create socket");
         }else{
