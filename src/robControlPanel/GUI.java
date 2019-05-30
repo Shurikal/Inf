@@ -7,8 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class GUI
 {
-    private boolean[] buttonMask;
-
     private JTextArea log;
 
     private JButton connectRob1, connectRob2, disconnectRob1,disconnectRob2, controlPanel;
@@ -18,6 +16,8 @@ public class GUI
     private JPanel gui;
 
     private JFrame fenster;
+
+    private Rob_Connection rob1,rob2;
 
     private Connection_Handler robs;
 
@@ -29,7 +29,6 @@ public class GUI
         contentpane.setLayout(new BorderLayout());
 
         gui = new JPanel();
-        buttonMask = new boolean[4];
 
         gui.setLayout(new BorderLayout());
         gui.add(topPanel(),BorderLayout.NORTH);
@@ -42,6 +41,7 @@ public class GUI
         fenster.pack();
         fenster.setVisible(true);
         robs = new Connection_Handler(this);
+
         new Thread(robs).start();
     }
 
@@ -65,8 +65,8 @@ public class GUI
         top.add(connectRob2);
         top.add(controlPanel);
 
-        disconnectRob1.addActionListener(e-> robs.disconnect_Rob1());
-        disconnectRob2.addActionListener(e-> robs.disconnect_Rob2());
+        disconnectRob1.addActionListener(e-> rob1.disconnect());
+        disconnectRob2.addActionListener(e-> rob2.disconnect());
 
         top.add(disconnectRob1);
         top.add(disconnectRob2);
@@ -75,16 +75,20 @@ public class GUI
     }
 
     private void connectRob1() {
-        robs.connect_Rob1();
-        if(!robs.connected_Rob1()){
+        rob1 = new Rob_Connection("localhost",5555);
+        if(!rob1.connected()){
             addText("Could not create socket");
+        }else{
+            robs.addRob(rob1);
         }
     }
 
     private void connectRob2() {
-        robs.connect_Rob2();
-        if(!robs.connected_Rob2()){
+        rob2 = new Rob_Connection("169.254.1.2",2000);
+        if(!rob1.connected()){
             addText("Could not create socket");
+        }else{
+            robs.addRob(rob2);
         }
     }
 
@@ -139,21 +143,23 @@ public class GUI
     }
 
     private void sendToAll() {
-        if(robs.connected_Rob1() && robs.connected_Rob2()){
-            try {
-                int i = Integer.parseInt(cmdField.getText());
-                Connection_Handler.sendDataRob1(i);
-                Connection_Handler.sendDataRob2(i);
-                addText(i + " -> all");
-                cmdField.setText("");
-            }catch (NumberFormatException e){}
+        if(rob1 != null && rob2 !=null) {
+            if(rob1.connected() && rob2.connected()){
+                try {
+                    int i = Integer.parseInt(cmdField.getText());
+                    rob1.cmd.writeCmd(i);
+                    rob2.cmd.writeCmd(i);
+                    addText(i + " -> all");
+                    cmdField.setText("");
+                }catch (NumberFormatException e){}
+            }
         }
     }
 
     private void sendToRob1() {
-        if(robs.connected_Rob1()){
+        if(rob1 != null && rob1.connected()){
             try {
-                Connection_Handler.sendDataRob1(Integer.parseInt(cmdField.getText()));
+                rob1.cmd.writeCmd(Integer.parseInt(cmdField.getText()));
                 addText(cmdField.getText() + " -> Rob1");
                 cmdField.setText("");
             }catch (NumberFormatException e){}
@@ -161,9 +167,9 @@ public class GUI
     }
 
     private void sendToRob2() {
-        if(robs.connected_Rob2()){
+        if(rob2 != null && rob2.connected()){
             try{
-                Connection_Handler.sendDataRob2(Integer.parseInt(cmdField.getText()));
+                rob2.cmd.writeCmd(Integer.parseInt(cmdField.getText()));
                 addText(cmdField.getText() + " -> Rob2");
                 cmdField.setText("");
             }catch (NumberFormatException e){}
@@ -172,7 +178,7 @@ public class GUI
     }
 
     private void openControlPanel1(){
-        new ControlPanel();
+        new ControlPanel(rob1);
     }
 
     private void menuezeileErzeugen(JFrame fenster)

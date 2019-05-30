@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 public class ControlPanel extends JFrame implements KeyListener, Runnable {
 
     private boolean vorwaerts,rueckwaerts,uz,guz,spanne,loese,hole;
+    private Rob_Connection rob;
 
     int VORWAERTS				= 4200;
     int RUECKWAERTS				= 4201;
@@ -20,9 +21,9 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
     int KURVER_UZ				= 4206;
     int KURVER_GUZ				= 4207;
 
-    public ControlPanel() {
+    public ControlPanel(Rob_Connection rob) {
         setPreferredSize(new Dimension(200, 200));
-
+        this.rob = rob;
 
         addKeyListener(this);
         this.setFocusable(true);
@@ -108,25 +109,26 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
                 this.dispose();
                 break;
             }
-
-            if(vorwaerts && !(rueckwaerts || guz || uz)){
-                Connection_Handler.sendDataRob1(VORWAERTS);
-            }else if(rueckwaerts && !(vorwaerts || guz || uz)){
-                Connection_Handler.sendDataRob1(RUECKWAERTS);
-            }else if(uz && !(vorwaerts || rueckwaerts || guz)){
-                Connection_Handler.sendDataRob1(DREHE_UZ);
-            }else if(guz && !(vorwaerts || rueckwaerts || uz)){
-                Connection_Handler.sendDataRob1(DREHE_GUZ);
-            }else if(vorwaerts && uz && !(rueckwaerts || guz)){
-                Connection_Handler.sendDataRob1(KURVEV_UZ);
-            }else if(vorwaerts && guz && !(rueckwaerts || uz)){
-                Connection_Handler.sendDataRob1(KURVEV_GUZ);
-            }else if(rueckwaerts && guz && !(vorwaerts || uz)){
-                Connection_Handler.sendDataRob1(KURVER_GUZ);
-            }else if(rueckwaerts && uz && !(vorwaerts || guz)){
-                Connection_Handler.sendDataRob1(KURVER_UZ);
-            }else {
-                Connection_Handler.sendDataRob1(0);
+            if(rob!=null){
+                if(vorwaerts && !(rueckwaerts || guz || uz)){
+                    rob.cmd.writeCmd(VORWAERTS);
+                }else if(rueckwaerts && !(vorwaerts || guz || uz)){
+                    rob.cmd.writeCmd(RUECKWAERTS);
+                }else if(uz && !(vorwaerts || rueckwaerts || guz)){
+                    rob.cmd.writeCmd(DREHE_UZ);
+                }else if(guz && !(vorwaerts || rueckwaerts || uz)){
+                    rob.cmd.writeCmd(DREHE_GUZ);
+                }else if(vorwaerts && uz && !(rueckwaerts || guz)){
+                    rob.cmd.writeCmd(KURVEV_UZ);
+                }else if(vorwaerts && guz && !(rueckwaerts || uz)){
+                    rob.cmd.writeCmd(KURVEV_GUZ);
+                }else if(rueckwaerts && guz && !(vorwaerts || uz)){
+                    rob.cmd.writeCmd(KURVER_GUZ);
+                }else if(rueckwaerts && uz && !(vorwaerts || guz)){
+                    rob.cmd.writeCmd(KURVER_UZ);
+                }else {
+                    rob.cmd.writeCmd(0);
+                }
             }
 
             try {
