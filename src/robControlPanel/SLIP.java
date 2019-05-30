@@ -106,13 +106,11 @@ public class SLIP {
                 switch (b) {
                     case ESC_END:
                         i--; //Hat gefehlt
-                        //received--;
                         packet[offset + i] = END;
                         break;
 
                     case ESC_ESC:
                         i -=1; //Hat gefehlt
-                        //received--;
                         packet[offset + i] = ESC;
                         break;
 
@@ -132,8 +130,6 @@ public class SLIP {
 
                     case ESC:
                         escaping = true;
-                        //packet[offset + i] = b;
-                        //received++;
                         break;
 
                     default:

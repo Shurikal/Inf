@@ -162,7 +162,9 @@ public class GUI
                 rob1.cmd.writeCmd(Integer.parseInt(cmdField.getText()));
                 addText(cmdField.getText() + " -> Rob1");
                 cmdField.setText("");
-            }catch (NumberFormatException e){}
+            }catch (NumberFormatException e){
+                System.out.println(e);
+            }
         }
     }
 
