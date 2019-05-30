@@ -6,15 +6,7 @@ import java.awt.*;
 public class Window
 {
     public static void main(String[] args) {
-        JFrame fenster = new JFrame("Java Proxy");
+        new GUI();
 
-        Container contentpane = fenster.getContentPane();
-
-        contentpane.setLayout(new BorderLayout());
-
-        fenster.add(new GUI(),BorderLayout.CENTER);
-
-        fenster.pack();
-        fenster.setVisible(true);
     }
 }

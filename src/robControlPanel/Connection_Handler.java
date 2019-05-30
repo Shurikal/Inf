@@ -7,17 +7,12 @@ public class Connection_Handler implements Runnable
 
     private static Rob_Connection rob1, rob2;
 
-    public Connection_Handler(GUI gui)
-    {
+    public Connection_Handler(GUI gui) {
     this.gui = gui;
     }
 
-    public static void main(String[] args) {
-
-    }
-
     public void connect_Rob1() {
-        rob1 = new Rob_Connection("127.0.0.1",5555);
+        rob1 = new Rob_Connection("169.254.1.1",2000);
     }
 
     public void connect_Rob2() {

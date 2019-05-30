@@ -2,14 +2,12 @@ package robControlPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class GUI extends JPanel
+public class GUI
 {
     private boolean[] buttonMask;
-
 
     private JTextArea log;
 
@@ -17,19 +15,34 @@ public class GUI extends JPanel
 
     private JTextField cmdField;
 
+    private JPanel gui;
+
+    private JFrame fenster;
+
     private Connection_Handler robs;
 
     public GUI() {
+        fenster = new JFrame("Java Proxy");
+
+        Container contentpane = fenster.getContentPane();
+
+        contentpane.setLayout(new BorderLayout());
+
+        gui = new JPanel();
         buttonMask = new boolean[4];
 
-        this.setLayout(new BorderLayout());
-        this.add(topPanel(),BorderLayout.NORTH);
-        this.add(centerPanel(),BorderLayout.CENTER);
-        this.add(botPanel(), BorderLayout.SOUTH);
+        gui.setLayout(new BorderLayout());
+        gui.add(topPanel(),BorderLayout.NORTH);
+        gui.add(centerPanel(),BorderLayout.CENTER);
+        gui.add(botPanel(), BorderLayout.SOUTH);
+
+        menuezeileErzeugen(fenster);
+
+        fenster.add(gui);
+        fenster.pack();
+        fenster.setVisible(true);
         robs = new Connection_Handler(this);
         new Thread(robs).start();
-
-
     }
 
     private JPanel topPanel() {
@@ -69,7 +82,7 @@ public class GUI extends JPanel
     }
 
     private void connectRob2() {
-        robs.connect_Rob1();
+        robs.connect_Rob2();
         if(!robs.connected_Rob2()){
             addText("Could not create socket");
         }
@@ -161,4 +174,42 @@ public class GUI extends JPanel
     private void openControlPanel1(){
         new ControlPanel();
     }
+
+    private void menuezeileErzeugen(JFrame fenster)
+    {
+        JMenuBar menuezeile = new JMenuBar();
+        fenster.setJMenuBar(menuezeile);
+
+        JMenu menue;
+        JMenuItem eintrag;
+
+        menue = new JMenu("Datei");
+        menuezeile.add(menue);
+
+        eintrag = new JMenuItem("Einstellungen");
+        eintrag.addActionListener(e -> { einstellungen(); });
+        menue.add(eintrag);
+
+        eintrag = new JMenuItem("Beenden");
+        eintrag.addActionListener(e -> { beenden(); });
+        menue.add(eintrag);
+
+        menue = new JMenu("Hilfe");
+        menuezeile.add(menue);
+
+        eintrag = new JMenuItem("Info...");
+        eintrag.addActionListener(e -> { zeigeInfo(); });
+        menue.add(eintrag);
+
+    }
+
+    private void einstellungen(){
+        new Einstellungen(robs, fenster);
+    }
+
+    private void beenden(){
+        System.exit(0);
+    }
+
+    private void zeigeInfo(){}
 }
