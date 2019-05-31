@@ -6,13 +6,11 @@ import java.awt.*;
 
 public class Settings extends JDialog
 {
-    private Connection_Handler connectionHandler;
     private JTextField address1,address2;
     private GUI gui;
 
-    public Settings(Connection_Handler connectionHandler, JFrame fenster, GUI gui){
+    public Settings(JFrame fenster, GUI gui){
         super(fenster, "Einstellungen",Dialog.ModalityType.DOCUMENT_MODAL);
-        this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());
 
         this.gui = gui;

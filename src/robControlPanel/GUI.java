@@ -225,7 +225,7 @@ public class GUI
     }
 
     private void settings(){
-        new Settings(robs, fenster, this);
+        new Settings(fenster, this);
     }
 
     private void quit(){

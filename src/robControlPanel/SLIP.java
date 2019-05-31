@@ -1,7 +1,5 @@
 package robControlPanel;
 
-import java.io.IOException;
-
 public class SLIP {
     /**
      * Creates a SLIP object using the supplied buffers.
@@ -105,12 +103,12 @@ public class SLIP {
             if (escaping) {
                 switch (b) {
                     case ESC_END:
-                        i--; //Hat gefehlt
+                        i--; //TODO: Hat gefehlt
                         packet[offset + i] = END;
                         break;
 
                     case ESC_ESC:
-                        i -=1; //Hat gefehlt
+                        i--; //TODO: Hat gefehlt
                         packet[offset + i] = ESC;
                         break;
 
