@@ -7,8 +7,6 @@ public class Connection_Handler implements Runnable
 
     GUI gui;
 
-    private static Rob_Connection rob1, rob2;
-
     private ArrayList<Rob_Connection> robs;
 
     public Connection_Handler(GUI gui) {

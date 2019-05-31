@@ -39,23 +39,16 @@ public class RobEmulator
                 new Thread(new Rob_Sender(client,tx,cmd,true)).start();
             }
 
-
-
             while(!client.isClosed()){
-
                  if (cmd.readCmd() == CmdInt.Type.Cmd) {
                     System.out.println(cmd.getInt());
                 }
-
                 try{
                     Thread.sleep(10);
-                }catch(Exception e){
-
-                }
+                }catch(Exception e){ }
             }
             System.out.println("Connection closed");
         }
-
     }
 
     public static void main(String[] args) {

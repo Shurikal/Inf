@@ -39,7 +39,7 @@ public class GUI
         gui.add(centerPanel(),BorderLayout.CENTER);
         gui.add(botPanel(), BorderLayout.SOUTH);
 
-        menuezeileErzeugen(fenster);
+        createMenuBar(fenster);
 
         fenster.add(gui);
         fenster.pack();
@@ -193,31 +193,31 @@ public class GUI
         new ControlPanel(rob1);
     }
 
-    private void menuezeileErzeugen(JFrame fenster)
+    private void createMenuBar(JFrame fenster)
     {
-        JMenuBar menuezeile = new JMenuBar();
-        fenster.setJMenuBar(menuezeile);
+        JMenuBar menuBar = new JMenuBar();
+        fenster.setJMenuBar(menuBar);
 
-        JMenu menue;
-        JMenuItem eintrag;
+        JMenu menu;
+        JMenuItem entry;
 
-        menue = new JMenu("Datei");
-        menuezeile.add(menue);
+        menu = new JMenu("Datei");
+        menuBar.add(menu);
 
-        eintrag = new JMenuItem("Einstellungen");
-        eintrag.addActionListener(e -> { settings(); });
-        menue.add(eintrag);
+        entry = new JMenuItem("Einstellungen");
+        entry.addActionListener(e -> { settings(); });
+        menu.add(entry);
 
-        eintrag = new JMenuItem("Beenden");
-        eintrag.addActionListener(e -> { quit(); });
-        menue.add(eintrag);
+        entry = new JMenuItem("Beenden");
+        entry.addActionListener(e -> { quit(); });
+        menu.add(entry);
 
-        menue = new JMenu("Hilfe");
-        menuezeile.add(menue);
+        menu = new JMenu("Hilfe");
+        menuBar.add(menu);
 
-        eintrag = new JMenuItem("Info...");
-        eintrag.addActionListener(e -> { showInfo(); });
-        menue.add(eintrag);
+        entry = new JMenuItem("Info...");
+        entry.addActionListener(e -> { showInfo(); });
+        menu.add(entry);
 
     }
 
