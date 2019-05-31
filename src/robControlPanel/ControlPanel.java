@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 public class ControlPanel extends JFrame implements KeyListener, Runnable {
 
-    private boolean vorwaerts,rueckwaerts,uz,guz,spanne,loese,hole;
+    private boolean vorwaerts,rueckwaerts,uz,guz,spanne90,spanne40,spanne08,werfe, loese_wand;
     private Rob_Connection rob;
 
     int VORWAERTS				= 4200;
@@ -20,6 +20,13 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
 
     int KURVER_UZ				= 4206;
     int KURVER_GUZ				= 4207;
+
+    int SPANNE90                = 4208;
+    int SPANNE40                = 4209;
+    int SPANNE08                = 4210;
+    int WERFE                   = 4211;
+    int LOESE_WAND              = 4212;
+
 
     public ControlPanel(Rob_Connection rob) {
         setPreferredSize(new Dimension(200, 200));
@@ -43,24 +50,29 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
 
     public void keyPressed(KeyEvent e) {
 
-        System.out.println(e);
+        //System.out.println(e);
         switch (e.getKeyChar()) {
-            case 'q':
+            case '1':
+                spanne90 = true;
                 break;
-            case 'e':
+            case '2':
+                spanne40 = true;
                 break;
-            case 'r':
-                hole = true;
+            case '3':
+                spanne08 = true;
                 break;
             case 'f':
-                loese = true;
+                werfe = true;
+                break;
             case 'a':
                 guz = true;
                 break;
             case 'd':
                 uz = true;
                 break;
-
+            case 'r':
+                loese_wand = true;
+                break;
             case 'w':
                 vorwaerts = true;
                 break;
@@ -82,19 +94,28 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
                 vorwaerts = false;
                 break;
             case 's':
-
                 rueckwaerts = false;
                 break;
-
-            case 'q':
+            case '1':
+                spanne90 = false;
                 break;
-            case 'e':
+            case '2':
+                spanne40 = false;
+                break;
+            case '3':
+                spanne08 = false;
                 break;
             case 'a':
                 guz = false;
                 break;
             case 'd':
                 uz = false;
+                break;
+            case 'f':
+                werfe = false;
+                break;
+            case 'r':
+                loese_wand = false;
                 break;
             default:
         }
@@ -124,11 +145,22 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
                     rob.cmd.writeCmd(KURVEV_GUZ);
                 }else if(rueckwaerts && guz && !(vorwaerts || uz)){
                     rob.cmd.writeCmd(KURVER_GUZ);
-                }else if(rueckwaerts && uz && !(vorwaerts || guz)){
+                }else if(rueckwaerts && uz && !(vorwaerts || guz)) {
                     rob.cmd.writeCmd(KURVER_UZ);
-                }else {
+                }else if(spanne90){
+                    rob.cmd.writeCmd(SPANNE90);
+                }else if(spanne40){
+                    rob.cmd.writeCmd(SPANNE40);
+                }else if(spanne08){
+                    rob.cmd.writeCmd(SPANNE08);
+                }else if(werfe){
+                    rob.cmd.writeCmd(WERFE);
+                }else if(loese_wand) {
+                    rob.cmd.writeCmd(LOESE_WAND);
+                }else{
                     rob.cmd.writeCmd(0);
                 }
+
             }
 
             try {

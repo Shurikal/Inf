@@ -72,8 +72,8 @@ public class GUI
         top.add(connectRob2);
         top.add(controlPanel);
 
-        disconnectRob1.addActionListener(e-> {if(rob1!=null){rob1.disconnect();}});
-        disconnectRob2.addActionListener(e-> {if(rob2!=null){rob2.disconnect();}});
+        disconnectRob1.addActionListener(e-> {if(rob1!=null){rob1.disconnect();rob1=null;}});
+        disconnectRob2.addActionListener(e-> {if(rob2!=null){rob2.disconnect();rob2=null;}});
 
         top.add(disconnectRob1);
         top.add(disconnectRob2);
@@ -82,7 +82,7 @@ public class GUI
     }
 
     private void connectRob1() {
-        rob1 = new Rob_Connection("localhost",5555,"Rob1");
+        rob1 = new Rob_Connection("169.254.1.1",2000,"Rob1");
         if(!rob1.connected()){
             addText("Could not create socket");
         }else{
@@ -91,7 +91,7 @@ public class GUI
     }
 
     private void connectRob2() {
-        rob2 = new Rob_Connection("169.254.1.2",2000,"Rob2");
+        rob2 = new Rob_Connection("localhost",5555,"Rob2");
         if(!rob1.connected()){
             addText("Could not create socket");
         }else{
