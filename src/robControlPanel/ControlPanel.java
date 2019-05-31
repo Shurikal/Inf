@@ -103,7 +103,7 @@ public class ControlPanel extends JFrame implements KeyListener, Runnable {
 
     public void run() {
         while (true) {
-            this.requestFocus();
+            //this.requestFocus();
 
             if(!this.isVisible()){
                 this.dispose();

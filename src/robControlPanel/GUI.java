@@ -147,6 +147,9 @@ public class GUI
 
     public void addText(String s) {
         log.append( LocalTime.now().format(DateTimeFormatter.ofPattern("H:m:s.S"))+ " : " + s + "\r\n");
+        if(autoscroll){
+            autoscroll();
+        }
     }
 
     private void sendToAll() {
@@ -202,38 +205,35 @@ public class GUI
         menuezeile.add(menue);
 
         eintrag = new JMenuItem("Einstellungen");
-        eintrag.addActionListener(e -> { einstellungen(); });
+        eintrag.addActionListener(e -> { settings(); });
         menue.add(eintrag);
 
         eintrag = new JMenuItem("Beenden");
-        eintrag.addActionListener(e -> { beenden(); });
+        eintrag.addActionListener(e -> { quit(); });
         menue.add(eintrag);
 
         menue = new JMenu("Hilfe");
         menuezeile.add(menue);
 
         eintrag = new JMenuItem("Info...");
-        eintrag.addActionListener(e -> { zeigeInfo(); });
+        eintrag.addActionListener(e -> { showInfo(); });
         menue.add(eintrag);
 
     }
 
-    private void einstellungen(){
-        new Einstellungen(robs, fenster);
+    private void settings(){
+        new Settings(robs, fenster);
     }
 
-    private void beenden(){
+    private void quit(){
         System.exit(0);
     }
 
-    private void zeigeInfo(){}
+    private void showInfo(){}
 
     public void autoscroll(){
         JScrollBar vertical = scrollPane.getVerticalScrollBar();
         vertical.setValue( vertical.getMaximum() );
     }
 
-    public boolean autoScrollEnabled(){
-        return autoscroll;
-    }
 }

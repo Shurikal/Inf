@@ -4,11 +4,11 @@ package robControlPanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class Einstellungen extends JDialog
+public class Settings extends JDialog
 {
     private Connection_Handler connectionHandler;
 
-    public Einstellungen(Connection_Handler connectionHandler, JFrame fenster){
+    public Settings(Connection_Handler connectionHandler, JFrame fenster){
         super(fenster, "Einstellungen",Dialog.ModalityType.DOCUMENT_MODAL);
         this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());

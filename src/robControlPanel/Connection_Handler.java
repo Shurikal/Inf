@@ -30,10 +30,6 @@ public class Connection_Handler implements Runnable
                         int i = rob.cmd.getInt();
                         gui.addText(i + " <- " +rob.getName());
 
-                        if(gui.autoScrollEnabled()){
-                            gui.autoscroll();
-                        }
-
                         for(Rob_Connection rob1 : robs){
                             if(rob1 != rob){
                                 rob1.cmd.writeCmd(i);
