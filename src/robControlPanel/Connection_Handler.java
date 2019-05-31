@@ -18,6 +18,10 @@ public class Connection_Handler implements Runnable
         robs.add(rob);
     }
 
+    public Rob_Connection getRob(int i){
+        return robs.get(i);
+    }
+
     @Override
     public void run() {
         while(true){

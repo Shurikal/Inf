@@ -21,6 +21,10 @@ public class GUI
 
     private Connection_Handler robs;
 
+    private String address1 = "169.254.1.1", address2 = "169.254.1.2";
+
+    private int port1 = 2000, port2 = 2000;
+
     private boolean autoscroll;
 
     private JScrollPane scrollPane;
@@ -82,7 +86,8 @@ public class GUI
     }
 
     private void connectRob1() {
-        rob1 = new Rob_Connection("169.254.1.1",2000,"Rob1");
+        rob1 = null;
+        rob1 = new Rob_Connection(address1,port1,"Rob1");
         if(!rob1.connected()){
             addText("Could not create socket");
         }else{
@@ -91,7 +96,8 @@ public class GUI
     }
 
     private void connectRob2() {
-        rob2 = new Rob_Connection("localhost",5555,"Rob2");
+        rob2 = null;
+        rob2 = new Rob_Connection(address2,port2,"Rob2");
         if(!rob1.connected()){
             addText("Could not create socket");
         }else{
@@ -222,7 +228,7 @@ public class GUI
     }
 
     private void settings(){
-        new Settings(robs, fenster);
+        new Settings(robs, fenster, this);
     }
 
     private void quit(){
@@ -235,5 +241,18 @@ public class GUI
         JScrollBar vertical = scrollPane.getVerticalScrollBar();
         vertical.setValue( vertical.getMaximum() );
     }
+
+    public String getAddress1(){return address1;}
+    public String getAddress2(){return address2;}
+
+    public int getPort1(){return port1;}
+    public int getPort2(){return port2;}
+
+    public void setAddress1(String s){address1 = s;}
+    public void setAddress2(String s){address2 = s;}
+
+    public void setPort1(int i){port1 = i;}
+    public void setPort2(int i){port2 = i;}
+
 
 }
