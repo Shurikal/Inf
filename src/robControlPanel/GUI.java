@@ -98,7 +98,7 @@ public class GUI
     private void connectRob2() {
         rob2 = null;
         rob2 = new Rob_Connection(address2,port2,"Rob2");
-        if(!rob1.connected()){
+        if(!rob2.connected()){
             addText("Could not create socket");
         }else{
             robs.addRob(rob2);
@@ -129,7 +129,6 @@ public class GUI
             if(cmdField.getText().length()!=0)
             sendToAll();
         });
-
 
         JPanel subBot = new JPanel();
         subBot.setLayout(new GridLayout(3, 1));
@@ -192,7 +191,6 @@ public class GUI
                 cmdField.setText("");
             }catch (NumberFormatException e){}
         }
-
     }
 
     private void openControlPanel1(){
@@ -224,7 +222,6 @@ public class GUI
         entry = new JMenuItem("Info...");
         entry.addActionListener(e -> { showInfo(); });
         menu.add(entry);
-
     }
 
     private void settings(){
@@ -235,7 +232,9 @@ public class GUI
         System.exit(0);
     }
 
-    private void showInfo(){}
+    private void showInfo(){
+        new Info(fenster);
+    }
 
     public void autoscroll(){
         JScrollBar vertical = scrollPane.getVerticalScrollBar();

@@ -28,27 +28,27 @@ public class Settings extends JDialog
         JPanel center = new JPanel();
         center.setLayout(new GridLayout(3,1));
 
-        address1 = new JTextField();
+        address1 = new JTextField(gui.getAddress1() + ":" +gui.getPort1());
+        address2 = new JTextField(gui.getAddress2() + ":" +gui.getPort2());
 
-        center.add(adress("IP 1 : ", address1, gui.getAddress1(),gui.getPort1()));
-        center.add(adress("IP 2 : ", address2,gui.getAddress2(),gui.getPort2()));
+        center.add(adress("IP 1 : ", address1));
+        center.add(adress("IP 2 : ", address2));
         JButton save = new JButton("Speichern");
         save.addActionListener(e-> save());
         center.add(save);
+        center.setPreferredSize(new Dimension(0,200));
         return center;
     }
 
-    private JPanel adress(String text, JTextField textField, String address,int port){
+    private JPanel adress(String text, JTextField textField){
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(new JLabel(text), BorderLayout.WEST);
-        textField = new JTextField(address + ":" + port);
         panel.add(textField,BorderLayout.CENTER);
         return panel;
     }
 
     private void save(){
-        System.out.println(address1.getText());
         String s = address1.getText();
         if(s.contains(":")) {
             try{
@@ -59,6 +59,18 @@ public class Settings extends JDialog
             }catch (NumberFormatException e){}
 
         }
+
+         s = address2.getText();
+        if(s.contains(":")) {
+            try{
+                String[] parts = s.split(":");
+                int port = Integer.parseInt(parts[1]);
+                gui.setAddress2(parts[0]);
+                gui.setPort2(port);
+            }catch (NumberFormatException e){}
+
+        }
+        this.dispose();
     }
 
 }
